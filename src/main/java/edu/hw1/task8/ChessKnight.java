@@ -13,8 +13,8 @@ public final class ChessKnight {
             for (int j = 0; j < BOARD_COLUMNS; j++) {
                 if (board[i][j] == 1) {
                     for (int[] move : MOVES) {
-                        if ((i + move[0] > 0) && (j + move[1] > 0) && (i + move[0] < BOARD_LINES) &&
-                            (j + move[1] < BOARD_COLUMNS)) {
+                        if ((i + move[0] > 0) && (j + move[1] > 0) && (i + move[0] < BOARD_LINES)
+                            && (j + move[1] < BOARD_COLUMNS)) {
                             if (board[i + move[0]][j + move[1]] == 1) {
                                 return false;
                             }

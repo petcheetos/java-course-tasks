@@ -6,8 +6,8 @@ public final class Numbers {
     private Numbers() {
     }
 
-    public static int countDigits(int num) {
-        num = Math.abs(num);
+    public static int countDigits(int number) {
+        int num = Math.abs(number);
         int count = 1;
         while (num > DIVISIOR) {
             count++;

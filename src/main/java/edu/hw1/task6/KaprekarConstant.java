@@ -4,12 +4,13 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class KaprekarConstant {
-    public static int CONST = 6174;
-    public static int NUMBER_BASE = 10;
+    public static final int CONST = 6174;
+    public static final int NUMBER_BASE = 10;
 
     private KaprekarConstant() {
     }
 
+    @SuppressWarnings("MagicNumber")
     public static int countK(int num) {
         if (num <= 1000 || num > 9999) {
             return -1;
@@ -17,11 +18,11 @@ public class KaprekarConstant {
         int countSteps = 0;
         Integer[] digitsInOrder = {0, 0, 0, 0};
         Integer[] digitsReverseOrder = {0, 0, 0, 0};
-
-        for (int i = 0; num > 0; i++) {
-            digitsInOrder[i] = num % NUMBER_BASE;
-            digitsReverseOrder[i] = num % NUMBER_BASE;
-            num /= NUMBER_BASE;
+        int number = num;
+        for (int i = 0; number > 0; i++) {
+            digitsInOrder[i] = number % NUMBER_BASE;
+            digitsReverseOrder[i] = number % NUMBER_BASE;
+            number /= NUMBER_BASE;
         }
         Arrays.sort(digitsInOrder);
         Arrays.sort(digitsReverseOrder, Collections.reverseOrder());

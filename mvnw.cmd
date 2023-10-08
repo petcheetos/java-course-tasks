@@ -186,7 +186,7 @@ if ERRORLEVEL 1 goto error
 goto end
 
 :error
-set ERROR_CODE=1
+set ERROR_CODE=1mvn checkstyle:check
 
 :end
 @endlocal & set ERROR_CODE=%ERROR_CODE%
@@ -203,3 +203,4 @@ if "%MAVEN_BATCH_PAUSE%"=="on" pause
 if "%MAVEN_TERMINATE_CMD%"=="on" exit %ERROR_CODE%
 
 cmd /C exit /B %ERROR_CODE%
+

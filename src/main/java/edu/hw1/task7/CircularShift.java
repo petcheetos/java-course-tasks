@@ -12,8 +12,8 @@ public final class CircularShift {
         }
         int binaryFormLength = Integer.toBinaryString(n).length();
         int newShift = shift % binaryFormLength;
-        return ((n << newShift) | (n >> (binaryFormLength - newShift))) %
-            (int) Math.pow(NUMBER_BASE, binaryFormLength);
+        return ((n << newShift) | (n >> (binaryFormLength - newShift)))
+            % (int) Math.pow(NUMBER_BASE, binaryFormLength);
     }
 
     public static int rotateRight(int n, int shift) {
@@ -22,7 +22,7 @@ public final class CircularShift {
         }
         int binaryFormLength = Integer.toBinaryString(n).length();
         int newShift = shift % binaryFormLength;
-        return ((n >> newShift) | (n << (binaryFormLength - newShift))) %
-            (int) Math.pow(NUMBER_BASE, binaryFormLength);
+        return ((n >> newShift) | (n << (binaryFormLength - newShift)))
+            % (int) Math.pow(NUMBER_BASE, binaryFormLength);
     }
 }
