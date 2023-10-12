@@ -11,6 +11,11 @@ public final class VideoLength {
             return -1;
         }
         String[] numbers = str.split(":");
+        for (var string : numbers) {
+            if (string.matches("[^[0-9]]")) {
+                return -1;
+            }
+        }
         int minutes = Integer.parseInt(numbers[0]);
         int seconds = Integer.parseInt(numbers[1]);
         if (seconds >= SECONDS_IN_MINUTE || seconds < 0 || minutes < 0) {
