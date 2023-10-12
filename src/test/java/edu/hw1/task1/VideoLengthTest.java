@@ -13,7 +13,11 @@ public class VideoLengthTest {
         "10:60, -1",
         "999:54, 59994",
         "a:54, -1",
+        "10:54a, -1",
+        "10:^00, -1",
         "-10:40, -1",
+        "2147483647:00, -1",
+        "10:-40, -1",
         ", -1"})
     @ParameterizedTest
     void testWithCsvSource(String testStr, int expectedResult) {
