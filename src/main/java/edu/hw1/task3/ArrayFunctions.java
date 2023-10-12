@@ -6,14 +6,14 @@ public final class ArrayFunctions {
     private ArrayFunctions() {
     }
 
-    public static boolean isNestable(int[] firstArr, int[] secondArr) {
-        if (firstArr == null || secondArr == null || firstArr.length == 0 || secondArr.length == 0) {
+    public static boolean isNestable(int[] firstArray, int[] secondArray) {
+        if (firstArray == null || secondArray == null || firstArray.length == 0 || secondArray.length == 0) {
             return false;
         }
-        int minElemInFirst = Arrays.stream(firstArr).min().getAsInt();
-        int minElemInSecond = Arrays.stream(secondArr).min().getAsInt();
-        int maxElemInFirst = Arrays.stream(firstArr).max().getAsInt();
-        int maxElemInSecond = Arrays.stream(secondArr).max().getAsInt();
+        int minElemInFirst = Arrays.stream(firstArray).min().getAsInt();
+        int minElemInSecond = Arrays.stream(secondArray).min().getAsInt();
+        int maxElemInFirst = Arrays.stream(firstArray).max().getAsInt();
+        int maxElemInSecond = Arrays.stream(secondArray).max().getAsInt();
 
         return (minElemInFirst > minElemInSecond) && (maxElemInFirst < maxElemInSecond);
     }
