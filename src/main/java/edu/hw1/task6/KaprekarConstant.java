@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class KaprekarConstant {
-    public static final int CONST = 6174;
+    public static final int KAPREKAR_CONST = 6174;
     public static final int NUMBER_BASE = 10;
 
     private KaprekarConstant() {
@@ -37,7 +37,7 @@ public class KaprekarConstant {
         int sum = leftNum - rightNum;
         if (sum == 0) {
             return -1;
-        } else if (sum == CONST) {
+        } else if (sum == KAPREKAR_CONST) {
             return ++countSteps;
         }
         return 1 + countK(sum);
