@@ -19,6 +19,9 @@ public class KaprekarConstant {
 
     @SuppressWarnings("MagicNumber")
     private static int doCountK(int num) {
+        if (num == KAPREKAR_CONST) {
+            return 0;
+        }
         int number = num;
         int[] digitsInOrder = {0, 0, 0, 0};
         int[] digitsReverseOrder = {0, 0, 0, 0};
