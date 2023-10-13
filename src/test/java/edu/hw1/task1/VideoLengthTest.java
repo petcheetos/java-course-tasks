@@ -9,6 +9,7 @@ public class VideoLengthTest {
     @DisplayName("Testing minutesToSecond()")
     @CsvSource({
         "01:00, 60",
+        "00:00, 0",
         "13:56, 836",
         "10:60, -1",
         "999:54, 59994",
@@ -17,6 +18,8 @@ public class VideoLengthTest {
         "10:^00, -1",
         "-10:40, -1",
         "2147483647:00, -1",
+        "21:999999999999, -1",
+        "21:-99999999999, -1",
         "10:-40, -1",
         ", -1"})
     @ParameterizedTest

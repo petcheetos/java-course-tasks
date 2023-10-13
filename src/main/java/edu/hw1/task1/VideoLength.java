@@ -11,13 +11,14 @@ public final class VideoLength {
             return -1;
         }
         String[] numbers = string.split(":");
-        for (var str : numbers) {
-            if (!str.matches("[-+]?\\d+")) {
-                return -1;
-            }
+        int minutes, seconds;
+        try {
+            minutes = Integer.parseInt(numbers[0]);
+            seconds = Integer.parseInt(numbers[1]);
         }
-        int minutes = Integer.parseInt(numbers[0]);
-        int seconds = Integer.parseInt(numbers[1]);
+        catch (NumberFormatException e) {
+            return -1;
+        }
         if (seconds >= SECONDS_IN_MINUTE || seconds < 0 || minutes < 0) {
             return -1;
         }
