@@ -30,6 +30,6 @@ public final class Palindrome {
             multiplier = NUMBER_BASE;
             reversedNum /= NUMBER_BASE * NUMBER_BASE;
         }
-        return (newNum > NUMBER_BASE) ? isPalindromeDescendant(newNum) : false;
+        return newNum > NUMBER_BASE && isPalindromeDescendant(newNum);
     }
 }
