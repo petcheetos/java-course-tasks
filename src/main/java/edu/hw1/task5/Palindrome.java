@@ -8,7 +8,7 @@ public final class Palindrome {
 
     public static boolean isPalindromeDescendant(int num) {
         if (num < NUMBER_BASE) {
-            return false;
+            return true;
         }
 
         int reversedNum = 0;
@@ -30,7 +30,6 @@ public final class Palindrome {
             multiplier = NUMBER_BASE;
             reversedNum /= NUMBER_BASE * NUMBER_BASE;
         }
-
-        return isPalindromeDescendant(newNum);
+        return (newNum > NUMBER_BASE) ? isPalindromeDescendant(newNum) : false;
     }
 }
