@@ -16,16 +16,17 @@ public class KaprekarConstant {
             return -1;
         }
         int countSteps = 0;
-        Integer[] digitsInOrder = {0, 0, 0, 0};
-        Integer[] digitsReverseOrder = {0, 0, 0, 0};
+        int[] digitsInOrder = {0, 0, 0, 0};
+        int[] digitsReverseOrder = {0, 0, 0, 0};
         int number = num;
         for (int i = 0; number > 0; i++) {
             digitsInOrder[i] = number % NUMBER_BASE;
-            digitsReverseOrder[i] = number % NUMBER_BASE;
             number /= NUMBER_BASE;
         }
         Arrays.sort(digitsInOrder);
-        Arrays.sort(digitsReverseOrder, Collections.reverseOrder());
+        for (int i = 0; i < digitsReverseOrder.length ; i++) {
+            digitsReverseOrder[i] = digitsInOrder[digitsInOrder.length - 1 - i];
+        }
         int leftNum = 0;
         int rightNum = 0;
         int multiplier = 1;
