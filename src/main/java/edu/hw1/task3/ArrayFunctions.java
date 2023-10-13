@@ -10,6 +10,7 @@ public final class ArrayFunctions {
         if (firstArray == null || secondArray == null || firstArray.length == 0 || secondArray.length == 0) {
             return false;
         }
+
         int minElemInFirst = Arrays.stream(firstArray).min().getAsInt();
         int minElemInSecond = Arrays.stream(secondArray).min().getAsInt();
         int maxElemInFirst = Arrays.stream(firstArray).max().getAsInt();
