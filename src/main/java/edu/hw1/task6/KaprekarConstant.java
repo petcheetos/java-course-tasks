@@ -14,11 +14,11 @@ public class KaprekarConstant {
         if (num <= 1000 || num > 9999) {
             return -1;
         }
-        return doCountK(num, true);
+        return doCountK(num);
     }
 
     @SuppressWarnings("MagicNumber")
-    private static int doCountK(int num, boolean isFirstIteration) {
+    private static int doCountK(int num) {
         int number = num;
         int[] digitsInOrder = {0, 0, 0, 0};
         int[] digitsReverseOrder = {0, 0, 0, 0};
@@ -44,6 +44,6 @@ public class KaprekarConstant {
         } else if (difference == KAPREKAR_CONST) {
             return 1;
         }
-        return 1 + doCountK(difference, false);
+        return 1 + doCountK(difference);
     }
 }
