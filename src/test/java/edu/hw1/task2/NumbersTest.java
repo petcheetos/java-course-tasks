@@ -9,7 +9,10 @@ public class NumbersTest {
     @DisplayName("Testing countDigits()")
     @CsvSource({
         "4666, 4",
+        "2147483647, 10",
+        "-2147483648, 10",
         "544, 3",
+        "-10, 2",
         "0, 1",
         "-754, 3"})
     @ParameterizedTest
