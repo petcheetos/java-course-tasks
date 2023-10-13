@@ -44,7 +44,8 @@ public class KaprekarConstant {
         int difference = leftNum - rightNum;
         if (difference == 0) {
             return -1;
-        } else if (difference == KAPREKAR_CONST) {
+        }
+        if (difference == KAPREKAR_CONST) {
             return 1;
         }
         return 1 + doCountK(difference);
