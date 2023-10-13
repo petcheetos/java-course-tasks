@@ -10,6 +10,7 @@ public class CircularShiftTest {
     @CsvSource({
         "16, 1, 1",
         "17, 2, 6",
+        "2147483647, 0, 2147483647",
         "13, -1, -1",
         "14, 2, 11",
         "8, 3, 4"})
@@ -23,6 +24,7 @@ public class CircularShiftTest {
         "8, 1, 4",
         "9, 2, 6",
         "16, 3, 2",
+        "-2147483648, 5, -1",
         "14, 2, 11",
         "-13, 5, -1"})
     @ParameterizedTest
