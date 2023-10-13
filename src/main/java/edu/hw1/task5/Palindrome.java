@@ -10,7 +10,6 @@ public final class Palindrome {
         if (num < NUMBER_BASE) {
             return true;
         }
-
         int reversedNum = 0;
         int temp = num;
         while (temp > 0) {
@@ -20,7 +19,6 @@ public final class Palindrome {
         if (reversedNum == num) {
             return true;
         }
-
         int newNum = 0;
         int multiplier = 1;
         while (reversedNum > 0) {
