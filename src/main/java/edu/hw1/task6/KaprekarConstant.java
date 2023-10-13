@@ -1,7 +1,6 @@
 package edu.hw1.task6;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class KaprekarConstant {
     public static final int KAPREKAR_CONST = 6174;
@@ -11,9 +10,11 @@ public class KaprekarConstant {
     }
 
     @SuppressWarnings("MagicNumber")
-    public static int countK(int num) {
-        if (num <= 1000 || num > 9999) {
-            return -1;
+    public static int countK(int num, boolean isFirstIteration) {
+        if (isFirstIteration) {
+            if (num <= 1000 || num > 9999) {
+                return -1;
+            }
         }
         int countSteps = 0;
         int[] digitsInOrder = {0, 0, 0, 0};
@@ -24,7 +25,7 @@ public class KaprekarConstant {
             number /= NUMBER_BASE;
         }
         Arrays.sort(digitsInOrder);
-        for (int i = 0; i < digitsReverseOrder.length ; i++) {
+        for (int i = 0; i < digitsReverseOrder.length; i++) {
             digitsReverseOrder[i] = digitsInOrder[digitsInOrder.length - 1 - i];
         }
         int leftNum = 0;
@@ -35,12 +36,12 @@ public class KaprekarConstant {
             rightNum = multiplier * rightNum + digitsReverseOrder[i];
             multiplier = NUMBER_BASE;
         }
-        int sum = leftNum - rightNum;
-        if (sum == 0) {
+        int difference = leftNum - rightNum;
+        if (difference == 0) {
             return -1;
-        } else if (sum == KAPREKAR_CONST) {
+        } else if (difference == KAPREKAR_CONST) {
             return ++countSteps;
         }
-        return 1 + countK(sum);
+        return 1 + countK(difference, false);
     }
 }
