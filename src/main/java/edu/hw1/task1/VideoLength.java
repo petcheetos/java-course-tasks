@@ -11,20 +11,17 @@ public final class VideoLength {
             return -1;
         }
         String[] numbers = string.split(":");
-        int minutes, seconds;
+        int minutes;
+        int seconds;
         try {
             minutes = Integer.parseInt(numbers[0]);
             seconds = Integer.parseInt(numbers[1]);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return -1;
         }
         if (seconds >= SECONDS_IN_MINUTE || seconds < 0 || minutes < 0) {
             return -1;
         }
-        if (Integer.MAX_VALUE / SECONDS_IN_MINUTE <= minutes) {
-            return -1;
-        }
-        return minutes * SECONDS_IN_MINUTE + seconds;
+        return (Integer.MAX_VALUE / SECONDS_IN_MINUTE <= minutes) ? -1 : minutes * SECONDS_IN_MINUTE + seconds;
     }
 }
