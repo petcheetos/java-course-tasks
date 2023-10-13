@@ -16,7 +16,6 @@ public class KaprekarConstant {
                 return -1;
             }
         }
-        int countSteps = 0;
         int[] digitsInOrder = {0, 0, 0, 0};
         int[] digitsReverseOrder = {0, 0, 0, 0};
         int number = num;
@@ -40,7 +39,7 @@ public class KaprekarConstant {
         if (difference == 0) {
             return -1;
         } else if (difference == KAPREKAR_CONST) {
-            return ++countSteps;
+            return 1;
         }
         return 1 + countK(difference, false);
     }
