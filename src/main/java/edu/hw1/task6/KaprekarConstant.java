@@ -1,0 +1,53 @@
+package edu.hw1.task6;
+
+import java.util.Arrays;
+
+public class KaprekarConstant {
+    public static final int KAPREKAR_CONST = 6174;
+    public static final int NUMBER_BASE = 10;
+
+    private KaprekarConstant() {
+    }
+
+    @SuppressWarnings("MagicNumber")
+    public static int countK(int num) {
+        if (num <= 1000 || num > 9999) {
+            return -1;
+        }
+        return doCountK(num);
+    }
+
+    @SuppressWarnings("MagicNumber")
+    private static int doCountK(int num) {
+        if (num == KAPREKAR_CONST) {
+            return 0;
+        }
+        int number = num;
+        int[] digitsInOrder = {0, 0, 0, 0};
+        int[] digitsReverseOrder = {0, 0, 0, 0};
+        for (int i = 0; number > 0; i++) {
+            digitsInOrder[i] = number % NUMBER_BASE;
+            number /= NUMBER_BASE;
+        }
+        Arrays.sort(digitsInOrder);
+        for (int i = 0; i < digitsReverseOrder.length; i++) {
+            digitsReverseOrder[i] = digitsInOrder[digitsInOrder.length - 1 - i];
+        }
+        int leftNum = 0;
+        int rightNum = 0;
+        int multiplier = 1;
+        for (int i = 3; i >= 0; i--) {
+            leftNum = multiplier * leftNum + digitsInOrder[i];
+            rightNum = multiplier * rightNum + digitsReverseOrder[i];
+            multiplier = NUMBER_BASE;
+        }
+        int difference = leftNum - rightNum;
+        if (difference == 0) {
+            return -1;
+        }
+        if (difference == KAPREKAR_CONST) {
+            return 1;
+        }
+        return 1 + doCountK(difference);
+    }
+}
