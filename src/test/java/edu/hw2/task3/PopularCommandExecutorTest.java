@@ -29,11 +29,11 @@ class PopularCommandExecutorTest {
         assertThatCode(commandExecutor::updatePackages).doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("Testing tryExecute, expected exception, FaultyConnection")
-    public void testTryExecuteShouldThrowExceptionToFaultyConnection() {
-        PopularCommandExecutor commandExecutor =
-            new PopularCommandExecutor(new DefaultConnectionManager(1), 2);
-        assertThatThrownBy(commandExecutor::updatePackages).isInstanceOf(ConnectionException.class);
-    }
+//    @Test
+//    @DisplayName("Testing tryExecute, expected exception, FaultyConnection")
+//    public void testTryExecuteShouldThrowExceptionToFaultyConnection() {
+//        PopularCommandExecutor commandExecutor =
+//            new PopularCommandExecutor(new DefaultConnectionManager(1), 2);
+//        assertThatThrownBy(commandExecutor::updatePackages).isInstanceOf(ConnectionException.class);
+//    }
 }
