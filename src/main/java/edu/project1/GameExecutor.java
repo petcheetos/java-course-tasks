@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class GameExecutor {
+
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Logger LOGGER = LogManager.getLogger();
     public GameStatus status = GameStatus.Default;
