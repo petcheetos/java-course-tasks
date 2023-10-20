@@ -1,8 +1,7 @@
 package edu.project1;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameExecutorTest {
@@ -23,7 +22,6 @@ public class GameExecutorTest {
     @Test
     @DisplayName("Testing game, all symbols are guessed, expected GameStatus = Winner")
     public void testShouldReturnWinner() {
-
         GameExecutor game = new GameExecutor("kitten");
         game.guess("k");
         game.guess("i");
