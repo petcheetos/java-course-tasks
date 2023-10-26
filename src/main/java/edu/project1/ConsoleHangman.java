@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 public class ConsoleHangman {
     private static final Scanner SCANNER = new Scanner(System.in);
     private final static Logger LOGGER = LogManager.getLogger();
-    private static boolean isGameActive = false;
+    private boolean isGameActive = false;
 
     public void run() {
         greet();
