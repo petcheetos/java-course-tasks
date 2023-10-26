@@ -1,11 +1,11 @@
 package edu.project1;
 
 public enum GameStatus {
-    Default("You are playing"),
-    Winner("You won"),
-    Loser("You lost"),
-    Surrendered("Don't give up"),
-    Error("Something went wrong");
+    Default(ConsoleOutput.DEFAULT_STATUS),
+    Winner(ConsoleOutput.WINNER_STATUS),
+    Loser(ConsoleOutput.LOSER_STATUS),
+    Surrendered(ConsoleOutput.SURRENDERED_STATUS),
+    Error(ConsoleOutput.ERROR_STATUS);
 
     private final String resultOutput;
 

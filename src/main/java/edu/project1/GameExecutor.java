@@ -1,5 +1,6 @@
 package edu.project1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -10,16 +11,18 @@ public final class GameExecutor {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Logger LOGGER = LogManager.getLogger();
     public GameStatus status = GameStatus.Default;
-    private static final int MAX_ATTEMPS = 5;
+    private static final int MAX_ATTEMPTS = 5;
     private char[] charArrHiddenWord;
     private char[] userAnswers;
+    private final char star = '*';
+    private ArrayList<Character> mistakes = new ArrayList<>();
     int attempts = 0;
 
     public GameExecutor(String hiddenWord) {
         charArrHiddenWord = hiddenWord.toCharArray();
         userAnswers = new char[charArrHiddenWord.length];
         for (int i = 0; i < charArrHiddenWord.length; i++) {
-            userAnswers[i] = '*';
+            userAnswers[i] = star;
         }
     }
 
@@ -27,54 +30,61 @@ public final class GameExecutor {
         printHiddenString();
         while (status == GameStatus.Default) {
             String inputString = input();
+            if (Objects.equals(inputString, ConsoleHangman.hiddenWord)) {
+                return GameStatus.Surrendered;
+            }
             if (inputString.length() > 1) {
                 return GameStatus.Error;
             }
-            guess(inputString);
+            status = guess(inputString.charAt(0));
         }
         return status;
     }
 
-    public void guess(String inputString) {
-        if (Objects.equals(inputString, "quit")) {
-            status = GameStatus.Surrendered;
-        }
-        while (attempts < MAX_ATTEMPS) {
-            int index = findSymbol(inputString);
-            if (index != -1) {
-                LOGGER.info("Hit!");
-                userAnswers[index] = inputString.charAt(0);
-                charArrHiddenWord[index] = '*';
+    private GameStatus guess(char symbol) {
+        while (attempts < MAX_ATTEMPTS) {
+            ArrayList<Integer> foundSymbolIndexes = findSymbol(symbol);
+            if (!foundSymbolIndexes.isEmpty()) {
+                LOGGER.info(ConsoleOutput.HIT);
+                for (var index : foundSymbolIndexes) {
+                    userAnswers[index] = symbol;
+                    charArrHiddenWord[index] = star;
+                }
                 status = (isWinner()) ? GameStatus.Winner : GameStatus.Default;
                 break;
             } else {
-                attempts++;
-                LOGGER.info("Missed, mistake " + attempts + " out of " + MAX_ATTEMPS + ".");
-                if (attempts == MAX_ATTEMPS) {
+                if (!mistakes.contains(symbol)) {
+                    mistakes.add(symbol);
+                    attempts++;
+                }
+                LOGGER.info(ConsoleOutput.MISTAKE + attempts + "/" + MAX_ATTEMPTS);
+                if (attempts == MAX_ATTEMPTS) {
                     status = GameStatus.Loser;
                 }
                 break;
             }
         }
         printHiddenString();
+        return status;
     }
 
     private void printHiddenString() {
-        LOGGER.info("The word: " + Arrays.toString(userAnswers));
+        LOGGER.info(ConsoleOutput.WORD_IN_BRACKETS + Arrays.toString(userAnswers));
     }
 
-    private int findSymbol(String inputString) {
+    private ArrayList<Integer> findSymbol(char symbol) {
+        ArrayList<Integer> symbolsIndexes = new ArrayList<>();
         for (int i = 0; i < charArrHiddenWord.length; i++) {
-            if (charArrHiddenWord[i] == inputString.charAt(0)) {
-                return i;
+            if (charArrHiddenWord[i] == symbol) {
+                symbolsIndexes.add(i);
             }
         }
-        return -1;
+        return symbolsIndexes;
     }
 
     private boolean isWinner() {
         for (int i = 0; i < userAnswers.length; i++) {
-            if (userAnswers[i] == '*') {
+            if (userAnswers[i] == star) {
                 return false;
             }
         }
@@ -82,7 +92,7 @@ public final class GameExecutor {
     }
 
     private String input() {
-        LOGGER.info("Input a symbol: ");
+        LOGGER.info(ConsoleOutput.ASK_TO_INPUT);
         return SCANNER.next();
     }
 }

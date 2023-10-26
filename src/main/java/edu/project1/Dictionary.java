@@ -10,6 +10,6 @@ public final class Dictionary {
     }
 
     public static String choseRandomWord() {
-        return dictionary[RANDOM.nextInt(dictionary.length + 1)];
+        return dictionary[RANDOM.nextInt(dictionary.length)];
     }
 }

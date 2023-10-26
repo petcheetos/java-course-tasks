@@ -8,30 +8,44 @@ import org.apache.logging.log4j.Logger;
 public class ConsoleHangman {
     private static final Scanner SCANNER = new Scanner(System.in);
     private final static Logger LOGGER = LogManager.getLogger();
-    private boolean isGameActive = false;
+    protected static String hiddenWord;
+    private boolean isGameActive = true;
+    public GameStatus status = GameStatus.Default;
+
+    public ConsoleHangman() {
+        hiddenWord = Dictionary.choseRandomWord();
+    }
+
+    public ConsoleHangman(String userWord) {
+        hiddenWord = userWord;
+    }
 
     public void run() {
         greet();
-        askToPlay();
         while (isGameActive) {
-            Session session = new Session();
-            session.run();
-            printResult(session);
             askToPlay();
+            GameExecutor game = new GameExecutor(hiddenWord);
+            status = game.play();
+            filterResult(status);
         }
     }
 
-    private void printResult(Session session) {
-        LOGGER.info(session.status.getOutputResult());
+    private void filterResult(GameStatus status) {
+        LOGGER.info(status.getOutputResult());
+        if (status == GameStatus.Surrendered) {
+            isGameActive = false;
+        } else if (status == GameStatus.Loser) {
+            LOGGER.info(ConsoleOutput.ANSWER + hiddenWord);
+        }
     }
 
     private void greet() {
-        LOGGER.info("Welcome to Hangman game!");
+        LOGGER.info(ConsoleOutput.GREETING);
     }
 
     private void askToPlay() {
-        LOGGER.info("Do you want to play? Write \"quit\" to leave the game");
+        LOGGER.info(ConsoleOutput.ASK_TO_PLAY);
         String userInput = SCANNER.next();
-        isGameActive = !Objects.equals(userInput, "quit");
+        isGameActive = !Objects.equals(userInput, ConsoleOutput.QUIT);
     }
 }
