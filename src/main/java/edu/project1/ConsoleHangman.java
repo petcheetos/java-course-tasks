@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ConsoleHangman {
-    protected static final Scanner SCANNER = new Scanner(System.in);
     private final static Logger LOGGER = LogManager.getLogger();
     protected static String hiddenWord;
     private boolean isGameActive = true;
@@ -23,17 +22,18 @@ public class ConsoleHangman {
 
     public void run() {
         greet();
-        while (isGameActive) {
-            hiddenWord = Dictionary.choseRandomWord();
-            askToPlay();
-            if (!isGameActive) {
-                break;
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (isGameActive) {
+                hiddenWord = Dictionary.choseRandomWord();
+                askToPlay(scanner);
+                if (!isGameActive) {
+                    break;
+                }
+                GameExecutor game = new GameExecutor(hiddenWord);
+                status = game.play(scanner);
+                filterResult(status);
             }
-            GameExecutor game = new GameExecutor(hiddenWord);
-            status = game.play();
-            filterResult(status);
         }
-        SCANNER.close();
     }
 
     private void filterResult(GameStatus status) {
@@ -49,9 +49,9 @@ public class ConsoleHangman {
         LOGGER.info(ConsoleOutput.GREETING);
     }
 
-    private void askToPlay() {
+    private void askToPlay(Scanner scanner) {
         LOGGER.info(ConsoleOutput.ASK_TO_PLAY);
-        String userInput = SCANNER.next();
+        String userInput = scanner.next();
         isGameActive = !Objects.equals(userInput, ConsoleOutput.QUIT);
     }
 }

@@ -25,10 +25,10 @@ public final class GameExecutor {
         }
     }
 
-    public GameStatus play() {
+    public GameStatus play(Scanner scanner) {
         printHiddenString();
         while (status == GameStatus.Default) {
-            String inputString = input();
+            String inputString = input(scanner);
             if (Objects.equals(inputString, ConsoleOutput.QUIT)) {
                 return GameStatus.Surrendered;
             }
@@ -90,8 +90,8 @@ public final class GameExecutor {
         return true;
     }
 
-    private String input() {
+    private String input(Scanner scanner) {
         LOGGER.info(ConsoleOutput.ASK_TO_INPUT);
-        return ConsoleHangman.SCANNER.next();
+        return scanner.next();
     }
 }

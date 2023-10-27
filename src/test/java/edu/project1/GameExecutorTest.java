@@ -46,6 +46,5 @@ public class GameExecutorTest {
         GameStatus result = game.status;
         assertEquals(GameStatus.Loser, result);
     }
-
 }
 

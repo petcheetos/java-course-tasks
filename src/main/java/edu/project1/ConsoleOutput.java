@@ -11,7 +11,7 @@ public class ConsoleOutput {
     public final static String DEFAULT_STATUS = "You are playing";
     public final static String WINNER_STATUS = "You won";
     public final static String LOSER_STATUS = "You lost";
-    public final static String SURRENDERED_STATUS = "Don't give up";
+    public final static String SURRENDERED_STATUS = "";
     public final static String ERROR_STATUS = "Something went wrong";
     public final static String ASK_TO_PLAY = "Do you want to play? Write \"quit\" to leave the game";
 
