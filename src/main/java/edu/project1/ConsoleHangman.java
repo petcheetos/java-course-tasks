@@ -13,11 +13,6 @@ public class ConsoleHangman {
     public GameStatus status = GameStatus.Default;
 
     public ConsoleHangman() {
-        hiddenWord = Dictionary.choseRandomWord();
-    }
-
-    public ConsoleHangman(String userWord) {
-        hiddenWord = userWord;
     }
 
     @SuppressWarnings("UncommentedMain")
@@ -30,6 +25,7 @@ public class ConsoleHangman {
     public void run() {
         greet();
         while (isGameActive) {
+            hiddenWord = Dictionary.choseRandomWord();
             askToPlay();
             if (!isGameActive) {
                 break;

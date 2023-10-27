@@ -19,11 +19,7 @@ public final class GameExecutor {
     int attempts = 0;
 
     public GameExecutor(String hiddenWord) {
-        String word = hiddenWord;
-        if (word == null) {
-            word = Dictionary.choseRandomWord();
-        }
-        charArrHiddenWord = word.toCharArray();
+        charArrHiddenWord = hiddenWord.toCharArray();
         userAnswers = new char[charArrHiddenWord.length];
         for (int i = 0; i < charArrHiddenWord.length; i++) {
             userAnswers[i] = star;
