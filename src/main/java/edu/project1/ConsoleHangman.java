@@ -13,7 +13,7 @@ public class ConsoleHangman {
     public GameStatus status = GameStatus.Default;
 
     public ConsoleHangman() {
-        hiddenWord = null;
+        hiddenWord = Dictionary.choseRandomWord();
     }
 
     public ConsoleHangman(String userWord) {
