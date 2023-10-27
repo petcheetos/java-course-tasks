@@ -10,18 +10,14 @@ public class ConsoleHangmanTest {
 
     @Test
     @DisplayName("Test game: input incorrect value and quit")
-//    void testGameWithIncorrectInput() throws Exception {
-//        withTextFromSystemIn("yes\n", "as\n", "quit\n", "quit\n")
-//            .execute(() -> {
-//                String output = tapSystemOut(() -> {
-//                    ConsoleHangman.main(new String[] {});
-//                });
-//                assertThat(output)
-//                    .contains("Something went wrong");
-//            });
-//
-//    }
-    void test() {
-
+    void testGameWithIncorrectInput() throws Exception {
+        withTextFromSystemIn("yes\n", "as\n", "quit\n", "quit\n")
+            .execute(() -> {
+                String output = tapSystemOut(() -> {
+                    ConsoleHangman.main(new String[] {});
+                });
+                assertThat(output)
+                    .contains("Something went wrong");
+            });
     }
 }
