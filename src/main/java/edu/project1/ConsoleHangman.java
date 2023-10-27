@@ -22,13 +22,9 @@ public class ConsoleHangman {
 
     @SuppressWarnings("UncommentedMain")
     public static void main(String[] args) {
-        if (args != null) {
-            ConsoleHangman hangman = new ConsoleHangman(args[0]);
-            hangman.run();
-        } else {
-            ConsoleHangman hangman = new ConsoleHangman();
-            hangman.run();
-        }
+        ConsoleHangman hangman = new ConsoleHangman();
+        hangman.run();
+
     }
 
     public void run() {

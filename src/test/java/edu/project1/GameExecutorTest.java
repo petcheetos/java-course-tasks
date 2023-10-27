@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameExecutorTest {
+
     @Test
     @DisplayName("Testing game, all symbols are guessed, duplicate symbols included, expected GameStatus = Winner")
     public void testShouldReturnWinner_1() {
