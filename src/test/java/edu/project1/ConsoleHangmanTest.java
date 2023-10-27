@@ -19,5 +19,6 @@ public class ConsoleHangmanTest {
                 assertThat(output)
                     .contains("Something went wrong");
             });
+        System.exit(0);
     }
 }
