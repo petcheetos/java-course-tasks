@@ -27,7 +27,6 @@ public class ConsoleHangman {
                 hiddenWord = Dictionary.choseRandomWord();
                 askToPlay(scanner);
                 if (!isGameActive) {
-                    LOGGER.info(ConsoleOutput.SURRENDERED_STATUS);
                     break;
                 }
                 GameExecutor game = new GameExecutor(hiddenWord);

@@ -6,7 +6,6 @@ public final class Dictionary {
     static String[] dictionary = new String[] {"cat", "whale", "apple", "peach", "football"};
 
     private Dictionary() {
-
     }
 
     public static String choseRandomWord() {

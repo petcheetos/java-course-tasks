@@ -46,5 +46,30 @@ public class GameExecutorTest {
         GameStatus result = game.status;
         assertEquals(GameStatus.Loser, result);
     }
-}
 
+/*  @Test
+    @DisplayName("Test game input quit")
+    void testGameWithQuit() throws Exception {
+        withTextFromSystemIn("yes\n", "quit\n")
+            .execute(() -> {
+                String output = tapSystemOut(() -> {
+                    ConsoleHangman.main(new String[] {});
+                });
+                assertThat(output)
+                    .contains(ConsoleOutput.SURRENDERED_STATUS);
+            });
+    }
+
+    @Test
+    @DisplayName("Test game: input incorrect value and quit")
+    void testGameWithIncorrectInput() throws Exception {
+        withTextFromSystemIn("yes\n", "abc\n", "quit\n")
+            .execute(() -> {
+                String output = tapSystemOut(() -> {
+                    ConsoleHangman.main(new String[] {});
+                });
+                assertThat(output)
+                    .contains(ConsoleOutput.ERROR_STATUS);
+            });
+    }*/
+}
