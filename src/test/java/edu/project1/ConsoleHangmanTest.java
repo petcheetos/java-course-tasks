@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConsoleHangmanTest {
 
     @Test
-    @DisplayName("Test game: input incorrect value")
+    @DisplayName("Test game: input incorrect value and quit")
     void testGameWithIncorrectInput() throws Exception {
         withTextFromSystemIn("yes\n", "abc\n", "quit\n")
             .execute(() -> {
@@ -18,7 +18,7 @@ public class ConsoleHangmanTest {
                     ConsoleHangman.main(new String[] {});
                 });
                 assertThat(output)
-                    .contains(ConsoleOutput.ERROR_STATUS);
+                    .contains(ConsoleOutput.SURRENDERED_STATUS);
             });
     }
 

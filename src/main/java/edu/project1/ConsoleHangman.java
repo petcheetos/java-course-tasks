@@ -27,6 +27,7 @@ public class ConsoleHangman {
                 hiddenWord = Dictionary.choseRandomWord();
                 askToPlay(scanner);
                 if (!isGameActive) {
+                    LOGGER.info(ConsoleOutput.SURRENDERED_STATUS);
                     break;
                 }
                 GameExecutor game = new GameExecutor(hiddenWord);
@@ -37,12 +38,12 @@ public class ConsoleHangman {
     }
 
     private void filterResult(GameStatus status) {
-        LOGGER.info(status.getOutputResult());
         if (status == GameStatus.Surrendered) {
             isGameActive = false;
         } else if (status == GameStatus.Loser) {
             LOGGER.info(ConsoleOutput.ANSWER + hiddenWord);
         }
+        LOGGER.info(status.getOutputResult());
     }
 
     private void greet() {
