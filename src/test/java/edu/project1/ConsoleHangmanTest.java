@@ -14,7 +14,6 @@ public class ConsoleHangmanTest {
 
         withTextFromSystemIn("yes\n", "as\n", "quit\n")
             .execute(() -> {
-                ConsoleHangman.main(new String[] {});
                 String output = tapSystemOut(() -> {
                     ConsoleHangman.main(new String[] {});
                 });
