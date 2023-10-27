@@ -45,7 +45,8 @@ public final class GameExecutor {
         while (attempts < MAX_ATTEMPTS) {
             ArrayList<Integer> foundSymbolIndexes = findSymbol(symbol);
             if (!foundSymbolIndexes.isEmpty()) {
-                LOGGER.info(ConsoleOutput.HIT);
+               // LOGGER.info(ConsoleOutput.HIT);
+                System.out.println(ConsoleOutput.HIT);
                 for (var index : foundSymbolIndexes) {
                     userAnswers[index] = symbol;
                     charArrHiddenWord[index] = star;
@@ -57,7 +58,8 @@ public final class GameExecutor {
                     mistakes.add(symbol);
                     attempts++;
                 }
-                LOGGER.info(ConsoleOutput.MISTAKE + attempts + "/" + MAX_ATTEMPTS);
+                System.out.println(ConsoleOutput.MISTAKE + attempts + "/" + MAX_ATTEMPTS);
+                //LOGGER.info(ConsoleOutput.MISTAKE + attempts + "/" + MAX_ATTEMPTS);
                 if (attempts == MAX_ATTEMPTS) {
                     status = GameStatus.Loser;
                 }
@@ -69,7 +71,8 @@ public final class GameExecutor {
     }
 
     private void printHiddenString() {
-        LOGGER.info(ConsoleOutput.WORD_IN_BRACKETS + Arrays.toString(userAnswers));
+        System.out.println(ConsoleOutput.WORD_IN_BRACKETS + Arrays.toString(userAnswers));
+        //LOGGER.info(ConsoleOutput.WORD_IN_BRACKETS + Arrays.toString(userAnswers));
     }
 
     private ArrayList<Integer> findSymbol(char symbol) {
@@ -92,7 +95,8 @@ public final class GameExecutor {
     }
 
     private String input() {
-        LOGGER.info(ConsoleOutput.ASK_TO_INPUT);
+        //LOGGER.info(ConsoleOutput.ASK_TO_INPUT);
+        System.out.println(ConsoleOutput.ASK_TO_INPUT);
         return SCANNER.next();
     }
 }

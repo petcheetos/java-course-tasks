@@ -36,20 +36,24 @@ public class ConsoleHangman {
     }
 
     private void filterResult(GameStatus status) {
-        LOGGER.info(status.getOutputResult());
+        //LOGGER.info(status.getOutputResult());
+        System.out.println(status.getOutputResult());
         if (status == GameStatus.Surrendered) {
             isGameActive = false;
         } else if (status == GameStatus.Loser) {
-            LOGGER.info(ConsoleOutput.ANSWER + hiddenWord);
+            //LOGGER.info(ConsoleOutput.ANSWER + hiddenWord);
+            System.out.println(ConsoleOutput.ANSWER + hiddenWord);
         }
     }
 
     private void greet() {
-        LOGGER.info(ConsoleOutput.GREETING);
+        //LOGGER.info(ConsoleOutput.GREETING);
+        System.out.println(ConsoleOutput.GREETING);
     }
 
     private void askToPlay() {
-        LOGGER.info(ConsoleOutput.ASK_TO_PLAY);
+        //LOGGER.info(ConsoleOutput.ASK_TO_PLAY);
+        System.out.println(ConsoleOutput.ASK_TO_PLAY);
         String userInput = SCANNER.next();
         isGameActive = !Objects.equals(userInput, ConsoleOutput.QUIT);
     }
