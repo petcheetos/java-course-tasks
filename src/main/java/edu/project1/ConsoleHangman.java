@@ -13,17 +13,31 @@ public class ConsoleHangman {
     public GameStatus status = GameStatus.Default;
 
     public ConsoleHangman() {
-        hiddenWord = Dictionary.choseRandomWord();
+        hiddenWord = null;
     }
 
     public ConsoleHangman(String userWord) {
         hiddenWord = userWord;
     }
 
+    @SuppressWarnings("UncommentedMain")
+    public static void main(String[] args) {
+        if (args != null) {
+            ConsoleHangman hangman = new ConsoleHangman(args[0]);
+            hangman.run();
+        } else {
+            ConsoleHangman hangman = new ConsoleHangman();
+            hangman.run();
+        }
+    }
+
     public void run() {
         greet();
         while (isGameActive) {
             askToPlay();
+            if (!isGameActive) {
+                break;
+            }
             GameExecutor game = new GameExecutor(hiddenWord);
             status = game.play();
             filterResult(status);

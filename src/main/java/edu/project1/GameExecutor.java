@@ -19,7 +19,11 @@ public final class GameExecutor {
     int attempts = 0;
 
     public GameExecutor(String hiddenWord) {
-        charArrHiddenWord = hiddenWord.toCharArray();
+        String word = hiddenWord;
+        if (word == null) {
+            word = Dictionary.choseRandomWord();
+        }
+        charArrHiddenWord = word.toCharArray();
         userAnswers = new char[charArrHiddenWord.length];
         for (int i = 0; i < charArrHiddenWord.length; i++) {
             userAnswers[i] = star;
@@ -30,7 +34,7 @@ public final class GameExecutor {
         printHiddenString();
         while (status == GameStatus.Default) {
             String inputString = input();
-            if (Objects.equals(inputString, ConsoleHangman.hiddenWord)) {
+            if (Objects.equals(inputString, ConsoleOutput.QUIT)) {
                 return GameStatus.Surrendered;
             }
             if (inputString.length() > 1) {
@@ -41,7 +45,7 @@ public final class GameExecutor {
         return status;
     }
 
-    private GameStatus guess(char symbol) {
+    protected GameStatus guess(char symbol) {
         while (attempts < MAX_ATTEMPTS) {
             ArrayList<Integer> foundSymbolIndexes = findSymbol(symbol);
             if (!foundSymbolIndexes.isEmpty()) {
