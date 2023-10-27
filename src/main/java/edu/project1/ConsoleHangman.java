@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ConsoleHangman {
-    private static final Scanner SCANNER = new Scanner(System.in);
+    protected static final Scanner SCANNER = new Scanner(System.in);
     private final static Logger LOGGER = LogManager.getLogger();
     protected static String hiddenWord;
     private boolean isGameActive = true;
@@ -33,6 +33,7 @@ public class ConsoleHangman {
             status = game.play();
             filterResult(status);
         }
+        SCANNER.close();
     }
 
     private void filterResult(GameStatus status) {
