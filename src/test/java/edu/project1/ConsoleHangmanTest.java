@@ -6,18 +6,19 @@ import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 import static com.github.stefanbirkner.systemlambda.SystemLambda.withTextFromSystemIn;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GameOutputTest {
+public class ConsoleHangmanTest {
 
     @Test
-    @DisplayName("Test game with <quit> input")
-    void testGameWithQuitInputShouldQuitMsg() throws Exception {
-        withTextFromSystemIn("yes\n", "quit\n")
+    @DisplayName("Test game: input incorrect value and quit")
+    void testGameWithIncorrectInput() throws Exception {
+        withTextFromSystemIn("yes\n", "as\n", "quit\n")
             .execute(() -> {
                 String output = tapSystemOut(() -> {
                     ConsoleHangman.main(new String[] {});
                 });
                 assertThat(output)
-                    .contains("Don't give up");
+                    .contains("Something went wrong");
             });
+
     }
 }
