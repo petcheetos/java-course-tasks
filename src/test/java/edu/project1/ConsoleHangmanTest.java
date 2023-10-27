@@ -10,15 +10,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConsoleHangmanTest {
 
     @Test
-    @DisplayName("Test game: input incorrect value and quit")
+    @DisplayName("Test game: input incorrect value")
     void testGameWithIncorrectInput() throws Exception {
-        withTextFromSystemIn("yes\n", "as\n", "quit\n")
+        withTextFromSystemIn("yes\n", "abc\n", "quit\n")
             .execute(() -> {
                 String output = tapSystemOut(() -> {
                     ConsoleHangman.main(new String[] {});
                 });
                 assertThat(output)
-                    .contains("Something went wrong");
+                    .contains(ConsoleOutput.ERROR_STATUS);
             });
     }
 
