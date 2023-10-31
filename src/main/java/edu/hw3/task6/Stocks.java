@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class Stocks implements StockMarket {
 
-    private Queue stocks;
+    private Queue<Stock> stocks;
 
     public Stocks() {
         stocks = new PriorityQueue<Stock>((obj1, obj2) -> obj2.price() - obj1.price());
@@ -23,6 +23,6 @@ public class Stocks implements StockMarket {
 
     @Override
     public Stock mostValuableStock() {
-        return (Stock) stocks.peek();
+        return stocks.peek();
     }
 }
