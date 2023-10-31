@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class BackwardIterator<T> implements Iterator {
+public class BackwardIterator<T> implements Iterator<T> {
     private final List<T> collection;
     private int currentIndex;
 
@@ -19,7 +19,7 @@ public class BackwardIterator<T> implements Iterator {
     }
 
     @Override
-    public Object next() {
+    public T next() {
         if (!hasNext()) {
             throw new NoSuchElementException("No more elements");
         }
