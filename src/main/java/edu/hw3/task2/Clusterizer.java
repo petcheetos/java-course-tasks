@@ -25,7 +25,7 @@ public class Clusterizer {
                 brackets.pop();
                 if (brackets.isEmpty()) {
                     clusters.add(newString.toString());
-                    newString.setLength(0);
+                    newString.delete(0, newString.length());
                 }
             }
         }
