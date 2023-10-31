@@ -1,8 +1,10 @@
 package edu.hw3.task4;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RomanNumeralsTest {
@@ -17,5 +19,13 @@ public class RomanNumeralsTest {
     @ParameterizedTest
     void testWithCsvSource(int num, String expectedResult) {
         assertEquals(RomanNumerals.convertToRoman(num), expectedResult);
+    }
+
+    @Test
+    void testExpectedException() {
+        assertThatThrownBy(() -> RomanNumerals.convertToRoman(5433))
+            .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> RomanNumerals.convertToRoman(-10))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }

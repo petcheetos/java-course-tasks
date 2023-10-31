@@ -1,6 +1,9 @@
 package edu.hw3.task4;
 
 public class RomanNumerals {
+    private static final String ERROR_MSG = "Number can not be converted";
+    private static final int MAX_NUMBER = 3999;
+    private static final int MIN_NUMBER = 1;
     private final static RomanLiteral[] ROMAN_LITERALS = {
         new RomanLiteral("M", 1000), new RomanLiteral("CM", 900),
         new RomanLiteral("D", 500), new RomanLiteral("CD", 400),
@@ -13,7 +16,10 @@ public class RomanNumerals {
     private RomanNumerals() {
     }
 
-    public static String convertToRoman(int number) {
+    public static String convertToRoman(int number) throws IllegalArgumentException {
+        if (number > MAX_NUMBER || number < MIN_NUMBER) {
+            throw new IllegalArgumentException(ERROR_MSG);
+        }
         StringBuilder stringBuilder = new StringBuilder();
         int num = number;
         int currValue = 0;
