@@ -13,7 +13,7 @@ public class Clusterizer {
     public static String clusterize(String string) {
         List<String> clusters = new ArrayList<>();
         Deque<Character> brackets = new ArrayDeque<>();
-        StringBuilder newString = new StringBuilder();
+        StringBuilder newString = new StringBuilder(string.length());
 
         for (int i = 0; i < string.length(); i++) {
             char currBracket = string.charAt(i);
