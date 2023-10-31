@@ -2,6 +2,7 @@ package edu.hw3.task8;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class BackwardIterator<T> implements Iterator {
     private final List<T> collection;
@@ -20,7 +21,7 @@ public class BackwardIterator<T> implements Iterator {
     @Override
     public Object next() {
         if (!hasNext()) {
-            throw new IllegalStateException("No more elements");
+            throw new NoSuchElementException("No more elements");
         }
         return collection.get(currentIndex--);
     }

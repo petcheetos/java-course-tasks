@@ -1,7 +1,9 @@
 package edu.hw3.task8;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class BackwardIteratorTest {
@@ -16,5 +18,12 @@ public class BackwardIteratorTest {
             counter++;
         }
         assertArrayEquals(iteratorOrder, new Integer[] {5, 4, 3, 2, 1});
+    }
+
+    @Test
+    void testBackwardIteratorExpectedException() {
+        BackwardIterator<Integer> iterator = new BackwardIterator<>(List.of());
+        assertThatThrownBy(iterator::next)
+            .isInstanceOf(NoSuchElementException.class);
     }
 }
