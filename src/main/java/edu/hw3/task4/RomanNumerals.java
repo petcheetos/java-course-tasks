@@ -23,10 +23,12 @@ public class RomanNumerals {
         StringBuilder stringBuilder = new StringBuilder();
         int num = number;
         int currValue = 0;
+        RomanLiteral romanCurrValue;
         while (num > 0) {
-            if (num >= ROMAN_LITERALS[currValue].value()) {
-                stringBuilder.append(ROMAN_LITERALS[currValue].letters());
-                num -= ROMAN_LITERALS[currValue].value();
+            romanCurrValue = ROMAN_LITERALS[currValue];
+            if (num >= romanCurrValue.value()) {
+                stringBuilder.append(romanCurrValue.letters());
+                num -= romanCurrValue.value();
             } else {
                 currValue++;
             }
