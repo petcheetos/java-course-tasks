@@ -9,7 +9,6 @@ public class ConsoleHangman {
     private final static Logger LOGGER = LogManager.getLogger();
     protected static String hiddenWord;
     private boolean isGameActive = true;
-    public GameStatus status = GameStatus.Default;
 
     public ConsoleHangman() {
     }
@@ -30,7 +29,7 @@ public class ConsoleHangman {
                     break;
                 }
                 GameExecutor game = new GameExecutor(hiddenWord);
-                status = game.play(scanner);
+                GameStatus status = game.play(scanner);
                 filterResult(status);
             }
         }
