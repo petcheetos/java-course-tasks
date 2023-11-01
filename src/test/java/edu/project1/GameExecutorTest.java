@@ -2,6 +2,9 @@ package edu.project1;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
+import static com.github.stefanbirkner.systemlambda.SystemLambda.withTextFromSystemIn;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameExecutorTest {
@@ -47,7 +50,7 @@ public class GameExecutorTest {
         assertEquals(GameStatus.Loser, result);
     }
 
-/*  @Test
+  @Test
     @DisplayName("Test game input quit")
     void testGameWithQuit() throws Exception {
         withTextFromSystemIn("yes\n", "quit\n")
@@ -71,5 +74,5 @@ public class GameExecutorTest {
                 assertThat(output)
                     .contains(ConsoleOutput.ERROR_STATUS);
             });
-    }*/
+    }
 }
