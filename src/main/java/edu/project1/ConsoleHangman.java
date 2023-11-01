@@ -36,13 +36,11 @@ public class ConsoleHangman {
     }
 
     private void filterResult(GameStatus status) {
-        if (status == GameStatus.Surrendered) {
-            LOGGER.info(ConsoleOutput.ANSWER + hiddenWord);
-            isGameActive = false;
-        } else if (status == GameStatus.Loser) {
-            LOGGER.info(ConsoleOutput.ANSWER + hiddenWord);
-        }
+        LOGGER.info(ConsoleOutput.ANSWER + hiddenWord);
         LOGGER.info(status.getOutputResult());
+        if (status == GameStatus.Surrendered) {
+            isGameActive = false;
+        }
     }
 
     private void greet() {

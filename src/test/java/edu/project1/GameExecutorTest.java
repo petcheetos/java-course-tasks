@@ -12,7 +12,8 @@ public class GameExecutorTest {
     @Test
     @DisplayName("Testing game, all symbols are guessed, duplicate symbols included, expected GameStatus = Winner")
     public void testShouldReturnWinner_1() {
-        GameExecutor game = new GameExecutor("kitten");
+        ConsoleHangman.hiddenWord = "kitten";
+        GameExecutor game = new GameExecutor(ConsoleHangman.hiddenWord);
         game.guess('k');
         game.guess('i');
         game.guess('e');
@@ -25,7 +26,8 @@ public class GameExecutorTest {
     @Test
     @DisplayName("Testing game, all symbols are guessed, expected GameStatus = Winner")
     public void testShouldReturnWinner_2() {
-        GameExecutor game = new GameExecutor("house");
+        ConsoleHangman.hiddenWord = "house";
+        GameExecutor game = new GameExecutor(ConsoleHangman.hiddenWord);
         game.guess('h');
         game.guess('i');
         game.guess('o');
@@ -39,7 +41,8 @@ public class GameExecutorTest {
     @Test
     @DisplayName("Testing game, 5 mistakes, expected GameStatus = Loser")
     public void testShouldReturnLoser() {
-        GameExecutor game = new GameExecutor("kitten");
+        ConsoleHangman.hiddenWord = "kitten";
+        GameExecutor game = new GameExecutor(ConsoleHangman.hiddenWord);
         game.guess('a');
         game.guess('b');
         game.guess('a');
@@ -50,7 +53,7 @@ public class GameExecutorTest {
         assertEquals(GameStatus.Loser, result);
     }
 
-  @Test
+    @Test
     @DisplayName("Test game input quit")
     void testGameWithQuit() throws Exception {
         withTextFromSystemIn("yes\n", "quit\n")
