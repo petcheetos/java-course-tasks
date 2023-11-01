@@ -86,8 +86,8 @@ public final class GameExecutor {
     }
 
     private boolean isWinner() {
-        for (int i = 0; i < maskedWord.length; i++) {
-            if (maskedWord[i] == star) {
+        for (char c : maskedWord) {
+            if (c == star) {
                 return false;
             }
         }
