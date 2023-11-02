@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AnimalFunctions {
+    private static final String NULL_ERROR_MSG = "List can not be null";
 
     private AnimalFunctions() {
     }
@@ -98,7 +100,7 @@ public class AnimalFunctions {
     //Task8
     public static Optional<Animal> getHeaviestLowerK(List<Animal> animals, int k) {
         if (animals == null) {
-            throw new NullPointerException("List can not be null");
+            throw new NullPointerException(NULL_ERROR_MSG);
         }
         if (k <= 0) {
             throw new IllegalArgumentException("K must be positive");
@@ -162,7 +164,7 @@ public class AnimalFunctions {
     //Task14
     public static Boolean isThereDogHigherK(List<Animal> animals, int k) {
         if (animals == null) {
-            throw new NullPointerException("List can not be null");
+            throw new NullPointerException(NULL_ERROR_MSG);
         }
         if (k <= 0) {
             throw new IllegalArgumentException("Height must be positive");
@@ -205,7 +207,7 @@ public class AnimalFunctions {
     //Task17
     public static Boolean isSpidersBiteMoreOftenDogs(List<Animal> animals) {
         if (animals == null) {
-            throw new NullPointerException("List can not be null");
+            throw new NullPointerException(NULL_ERROR_MSG);
         }
         int value = animals.stream()
             .mapToInt(animal -> {
@@ -221,22 +223,51 @@ public class AnimalFunctions {
     }
 
     //Task18
-//    public static Optional<Animal> findHeaviestFish(List<Animal>... animals) {
-//        List<Animal> heavyFish = new ArrayList<>();
-//        for (List<Animal> list : animals) {
-//            if (list == null) {
-//                throw new NullPointerException("List can not be null");
-//            }
-//            heavyFish.add(list.stream()
-//                .filter(animal -> animal.type() == Animal.Type.FISH)
-//                .max(Comparator.comparingInt(Animal::weight)).
-//                orElse(null));
-//        }
-//        return heavyFish.stream()
-//            .max(Comparator.comparingInt(Animal::weight));
-//    }
+    public static Optional<Animal> findHeaviestFish(List<Animal>... animals) {
+        List<Animal> heavyFish = new ArrayList<>();
+        for (List<Animal> list : animals) {
+            if (list == null) {
+                throw new NullPointerException(NULL_ERROR_MSG);
+            }
+            heavyFish.add(list.stream()
+                .filter(animal -> animal.type() == Animal.Type.FISH)
+                .max(Comparator.comparingInt(Animal::weight))
+                .orElse(null));
+        }
+        return heavyFish.stream()
+            .max(Comparator.comparingInt(Animal::weight));
+    }
 
     //Task19
-    //Task20
+    public static Map<String, Set<ValidationError>> getAnimalsWithErrors(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+        Map<String, Set<ValidationError>> map = new HashMap<>();
+        animals
+            .forEach(animal -> {
+                Set<ValidationError> currSet = ValidationError.validate(animal);
+                if (!currSet.isEmpty()) {
+                    map.put(animal.name(), currSet);
+                }
+            });
+        return map;
+    }
 
+    //Task20
+    public static Map<String, String> getAnimalsWithErrorsToStringMap(Map<String, Set<ValidationError>> errorMap) {
+        if (errorMap == null) {
+            return null;
+        }
+        Map<String, String> map = new HashMap<>();
+        errorMap.forEach(
+            (String name, Set<ValidationError> set) -> {
+                StringBuilder stringBuilder = new StringBuilder();
+                set.forEach(error -> stringBuilder.append(error.toString()).append(" "));
+                map.put(name, stringBuilder.toString());
+                stringBuilder.delete(0, stringBuilder.length());
+            }
+        );
+        return map;
+    }
 }

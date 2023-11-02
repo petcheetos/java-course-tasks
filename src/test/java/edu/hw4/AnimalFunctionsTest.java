@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.junit.jupiter.api.Assertions;
+import java.util.Set;
+import java.util.TreeSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -340,7 +340,7 @@ public class AnimalFunctionsTest {
     @Test
     void testCountTotalWeightOfEachTypeWithIncorrectArgs() {
         assertThrows(
-            NullPointerException.class,
+            IllegalArgumentException.class,
             () -> AnimalFunctions.countTotalWeightOfEachType(List.of(), 10, -1)
         );
         assertThrows(
@@ -401,23 +401,71 @@ public class AnimalFunctionsTest {
 
         assertThrows(
             NullPointerException.class,
-            () -> AnimalFunctions.isSpidersBiteMoreOftenDogs(null));
+            () -> AnimalFunctions.isSpidersBiteMoreOftenDogs(null)
+        );
     }
 
-//    @Test
-//    @DisplayName("Testing task18")
-//    void testFindHeaviestFish() {
-//        assertEquals(
-//            new Animal("Nemo", Animal.Type.FISH, Animal.Sex.M, 2, 20, 5, false),
-//            AnimalFunctions.findHeaviestFish(List.of(
-//                new Animal("Mary", Animal.Type.CAT, Animal.Sex.F, 1, 32, 3, false),
-//                new Animal("Cat", Animal.Type.CAT, Animal.Sex.M, 1, 32, 3, false),
-//                new Animal("Nemo", Animal.Type.FISH, Animal.Sex.M, 2, 20, 3, false)
-//            ), List.of(
-//                new Animal("Nemo", Animal.Type.FISH, Animal.Sex.M, 2, 20, 5, false),
-//                new Animal("Mary", Animal.Type.CAT, Animal.Sex.F, 1, 32, 3, false),
-//                new Animal("Cat", Animal.Type.CAT, Animal.Sex.M, 1, 32, 3, false)
-//            ))
-//        );
-//    }
+    @Test
+    @DisplayName("Testing task18")
+    void testFindHeaviestFish() {
+        Optional<Animal> fish = Optional.of(new Animal("Nemo", Animal.Type.FISH, Animal.Sex.M, 2, 20, 5, false));
+        assertEquals(
+            fish,
+            AnimalFunctions.findHeaviestFish(List.of(
+                new Animal("Mary", Animal.Type.CAT, Animal.Sex.F, 1, 32, 3, false),
+                new Animal("Cat", Animal.Type.CAT, Animal.Sex.M, 1, 32, 3, false),
+                new Animal("Nemo", Animal.Type.FISH, Animal.Sex.M, 2, 20, 3, false)
+            ), List.of(
+                new Animal("Nemo", Animal.Type.FISH, Animal.Sex.M, 2, 20, 5, false),
+                new Animal("Mary", Animal.Type.CAT, Animal.Sex.F, 1, 32, 3, false),
+                new Animal("Cat", Animal.Type.CAT, Animal.Sex.M, 1, 32, 3, false)
+            ))
+        );
+
+        assertThrows(
+            NullPointerException.class,
+            () -> AnimalFunctions.findHeaviestFish(null)
+        );
+
+        assertThrows(
+            NullPointerException.class,
+            () -> AnimalFunctions.findHeaviestFish(List.of(), null, List.of())
+        );
+    }
+
+    @Test
+    @DisplayName("Testing task19")
+    void testGetAnimalsWithErrors() {
+        Animal animal1 = new Animal("", Animal.Type.CAT, Animal.Sex.F, 1, 32, 3, false);
+        Animal animal2 = new Animal("Mary", Animal.Type.CAT, null, 1, -10, 3, false);
+        Map<String, Set<ValidationError>> map = new HashMap<>();
+        map.put("", Set.of(ValidationError.WRONG_NAME));
+        map.put("Mary", Set.of(ValidationError.WRONG_SEX, ValidationError.WRONG_HEIGHT));
+        assertEquals(
+            map,
+            AnimalFunctions.getAnimalsWithErrors(List.of(
+                animal1,
+                new Animal("Kitten", Animal.Type.CAT, Animal.Sex.F, 1, 10, 1, false),
+                animal2
+            ))
+        );
+        assertNull(AnimalFunctions.getAnimalsWithErrors(null));
+    }
+
+    @Test
+    @DisplayName("Testing task20")
+    void testGetAnimalsWithErrorsToStringMap() {
+        Map<String, Set<ValidationError>> map = new HashMap<>();
+        map.put("", Set.of(ValidationError.WRONG_NAME));
+        Set<ValidationError> treeSet = new TreeSet<>();
+        treeSet.add(ValidationError.WRONG_HEIGHT);
+        treeSet.add(ValidationError.WRONG_SEX);
+        map.put("Mary", treeSet);
+        Map<String, String> expectedMap = new HashMap<>();
+        expectedMap.put("", "WRONG_NAME ");
+        expectedMap.put("Mary", "WRONG_SEX WRONG_HEIGHT ");
+        assertEquals(expectedMap, AnimalFunctions.getAnimalsWithErrorsToStringMap(map));
+
+        assertNull(AnimalFunctions.getAnimalsWithErrorsToStringMap(null));
+    }
 }
