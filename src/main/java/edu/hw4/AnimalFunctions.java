@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import static java.util.Collections.max;
 
 public class AnimalFunctions {
 
@@ -52,8 +51,9 @@ public class AnimalFunctions {
         if (animals == null) {
             return null;
         }
-        return animals.stream().
-        max(Comparator.comparingInt(animal -> animal.name().length())).orElse(null);
+        return animals.stream()
+            .max(Comparator.comparingInt(animal -> animal.name().length()))
+            .orElse(null);
     }
 
     //Task5
@@ -98,12 +98,14 @@ public class AnimalFunctions {
     //Task8
     public static Optional<Animal> getHeaviestLowerK(List<Animal> animals, int k) {
         if (animals == null) {
-            return Optional.empty();
+            throw new NullPointerException("List can not be null");
         }
         if (k <= 0) {
             throw new IllegalArgumentException("K must be positive");
         }
-        return (animals.stream().filter(animal -> animal.height() < k)).max(Comparator.comparingInt(Animal::weight));
+        return animals.stream()
+            .filter(animal -> animal.height() < k)
+            .max(Comparator.comparingInt(Animal::weight));
     }
 
     //Task9
@@ -111,7 +113,9 @@ public class AnimalFunctions {
         if (animals == null) {
             return -1;
         }
-        return animals.stream().map(Animal::paws).reduce(0, Integer::sum);
+        return animals.stream()
+            .map(Animal::paws)
+            .reduce(0, Integer::sum);
     }
 
     //Task10
@@ -119,27 +123,120 @@ public class AnimalFunctions {
         if (animals == null) {
             return null;
         }
-        return animals.stream().filter(animal -> animal.paws() != animal.age()).toList();
+        return animals.stream()
+            .filter(animal -> animal.paws() != animal.age())
+            .collect(Collectors.toList());
     }
 
     //Task11
+    public static List<Animal> getListAnimalsBiteHigherK(List<Animal> animals) {
+        final int maxHeight = 100;
+        if (animals == null) {
+            return null;
+        }
+        return animals.stream()
+            .filter(animal -> (animal.bites() && animal.height() > maxHeight))
+            .collect(Collectors.toList());
+    }
 
     //Task12
+    public static Long countWeightExceedsHeight(List<Animal> animals) {
+        if (animals == null) {
+            return -1L;
+        }
+        return animals.stream()
+            .filter(animal -> animal.weight() > animal.height())
+            .count();
+    }
 
     //Task13
+    public static List<Animal> getAnimalsWithNamesOfTwoOrMoreWords(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+        return animals.stream()
+            .filter(animal -> animal.name().contains(" "))
+            .collect(Collectors.toList());
+    }
 
     //Task14
+    public static Boolean isThereDogHigherK(List<Animal> animals, int k) {
+        if (animals == null) {
+            throw new NullPointerException("List can not be null");
+        }
+        if (k <= 0) {
+            throw new IllegalArgumentException("Height must be positive");
+        }
+        return animals.stream()
+            .anyMatch(animal -> animal.type() == Animal.Type.DOG && animal.height() > k);
+    }
 
     //Task15
+    public static Map<Animal.Type, Integer> countTotalWeightOfEachType(List<Animal> animals, int k, int l) {
+        if (animals == null) {
+            return null;
+        }
+        if (k <= 0 || l <= 0 || k >= l) {
+            throw new IllegalArgumentException("Age range must be correct");
+        }
+        Map<Animal.Type, Integer> map = new HashMap<>();
+        animals.forEach(animal -> {
+                if (k <= animal.age() && animal.age() <= l) {
+                    map.put(animal.type(), map.getOrDefault(animal.type(), 0) + animal.weight());
+                }
+            }
+        );
+        return map;
+    }
 
     //Task16
+    public static List<Animal> sortTypeSexName(List<Animal> animals) {
+        if (animals == null) {
+            return null;
+        }
+        return animals.stream()
+            .sorted(Comparator
+                .comparing(Animal::type)
+                .thenComparing(Animal::sex)
+                .thenComparing(Animal::name))
+            .collect(Collectors.toList());
+    }
 
     //Task17
+    public static Boolean isSpidersBiteMoreOftenDogs(List<Animal> animals) {
+        if (animals == null) {
+            throw new NullPointerException("List can not be null");
+        }
+        int value = animals.stream()
+            .mapToInt(animal -> {
+                if (animal.type() == Animal.Type.DOG && animal.bites()) {
+                    return -1;
+                } else if (animal.type() == Animal.Type.SPIDER && animal.bites()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }).sum();
+        return value > 0;
+    }
 
     //Task18
+//    public static Optional<Animal> findHeaviestFish(List<Animal>... animals) {
+//        List<Animal> heavyFish = new ArrayList<>();
+//        for (List<Animal> list : animals) {
+//            if (list == null) {
+//                throw new NullPointerException("List can not be null");
+//            }
+//            heavyFish.add(list.stream()
+//                .filter(animal -> animal.type() == Animal.Type.FISH)
+//                .max(Comparator.comparingInt(Animal::weight)).
+//                orElse(null));
+//        }
+//        return heavyFish.stream()
+//            .max(Comparator.comparingInt(Animal::weight));
+//    }
 
     //Task19
-
     //Task20
 
 }
