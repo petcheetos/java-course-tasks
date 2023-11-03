@@ -78,4 +78,17 @@ public class GameExecutorTest {
                     .contains(ConsoleOutput.ERROR_STATUS);
             });
     }
+
+    @Test
+    @DisplayName("Test game: input incorrect value and continue game")
+    void testGameWithIncorrectInputNotQuit() throws Exception {
+        withTextFromSystemIn("yes\n", "abc\n", "k\n", "a\n", "quit\n")
+            .execute(() -> {
+                String output = tapSystemOut(() -> {
+                    ConsoleHangman.main(new String[] {});
+                });
+                assertThat(output)
+                    .contains(ConsoleOutput.SURRENDERED_STATUS);
+            });
+    }
 }
