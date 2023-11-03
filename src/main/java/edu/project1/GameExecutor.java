@@ -33,7 +33,8 @@ public final class GameExecutor {
                 return GameStatus.Surrendered;
             }
             if (inputString.length() > 1) {
-                return GameStatus.Error;
+                LOGGER.info(ConsoleOutput.ERROR_STATUS);
+                continue;
             }
             status = guess(inputString.charAt(0));
         }

@@ -13,7 +13,7 @@ public class ConsoleOutput {
     public final static String WINNER_STATUS = "You won";
     public final static String LOSER_STATUS = "You lost";
     public final static String SURRENDERED_STATUS = "Bye!";
-    public final static String ERROR_STATUS = "Something went wrong";
+    public final static String ERROR_STATUS = "Please, enter only one letter";
     public final static String ASK_TO_PLAY = "Do you want to play? Write \"quit\" to leave the game";
 
     private ConsoleOutput() {
