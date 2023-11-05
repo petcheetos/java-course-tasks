@@ -1,13 +1,16 @@
 package edu.project2;
 
+import java.util.Scanner;
+
 public class Main {
 
     private Main() {
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         ConsoleMaze consoleMaze = new ConsoleMaze();
-        consoleMaze.run();
+        consoleMaze.run(scanner);
+        scanner.close();
     }
 }
-

@@ -29,7 +29,7 @@ public class Renderer {
                 } else if (isSolved && grid[row][col].getType() == Maze.Cell.Type.WAY) {
                     stringBuilder.append(ConsoleOutput.RIGHT_WAY_SYMBOL);
                 }
-                if (col == maze.getWidth() - 1) {
+                if ((col == maze.getWidth() - 1) && (row <= maze.getHeight() - 1)) {
                     stringBuilder.append(ConsoleOutput.LINE_FEED);
                 }
             }
