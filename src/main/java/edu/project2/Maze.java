@@ -32,6 +32,10 @@ public final class Maze {
         return width;
     }
 
+    public Cell[][] getGrid() {
+        return grid;
+    }
+
     public Cell.Type getCellTypeAt(int row, int col) {
         if (row < 0 || col < 0 || row >= height || col >= width) {
             throw new IllegalArgumentException(ConsoleOutput.INCORRECT_COORDINATE);
@@ -44,7 +48,7 @@ public final class Maze {
             throw new IllegalArgumentException(ConsoleOutput.INCORRECT_COORDINATE);
         }
         if (type == null) {
-            throw new IllegalArgumentException(ConsoleOutput.INCORRECT_TYPE);
+            throw new NullPointerException(ConsoleOutput.INCORRECT_TYPE);
         }
         grid[row][col].setType(type);
     }
@@ -59,8 +63,7 @@ public final class Maze {
         public enum Type {
             WALL,
             PASSAGE,
-            WAY,
-            ENTRANCE
+            WAY
         }
 
         private final int row;
@@ -77,7 +80,9 @@ public final class Maze {
         }
 
         public void setType(Type newType) {
-            type = newType;
+            if (newType != null) {
+                type = newType;
+            }
         }
 
         public int getRow() {
@@ -93,5 +98,6 @@ public final class Maze {
         }
     }
 
-    public record Coordinate(int row, int col) {}
+    public record Coordinate(int row, int col) {
+    }
 }

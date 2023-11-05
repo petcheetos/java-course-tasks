@@ -1,5 +1,6 @@
 package edu.project2.Solvers;
 
+import edu.project2.ConsoleOutput;
 import edu.project2.Maze;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +17,10 @@ public class BFSMazeSolver implements Solver {
 
     @Override
     public List<Maze.Coordinate> solve(Maze maze, Maze.Coordinate start, Maze.Coordinate end) {
+        if (maze.getCellTypeAt(start.row(), start.col()) != Maze.Cell.Type.PASSAGE
+            || maze.getCellTypeAt(end.row(), end.col()) != Maze.Cell.Type.PASSAGE) {
+            throw new IllegalArgumentException(ConsoleOutput.CELL_IS_NOT_PASSAGE);
+        }
         Queue<Maze.Coordinate> queue = new LinkedList<>();
         Map<Maze.Coordinate, Maze.Coordinate> parentMap = new HashMap<>();
         boolean[][] visited = new boolean[maze.getHeight()][maze.getWidth()];
@@ -42,8 +47,8 @@ public class BFSMazeSolver implements Solver {
         for (int[] step : DIRECTIONS) {
             int newRow = current.row() + step[0];
             int newCol = current.col() + step[1];
-            if ((newRow >= 0 && newRow < maze.getHeight() && newCol >= 0 && newCol < maze.getWidth()) &&
-                !visited[newRow][newCol]
+            if ((newRow >= 0 && newRow < maze.getHeight() && newCol >= 0 && newCol < maze.getWidth())
+                && !visited[newRow][newCol]
                 && maze.getCellTypeAt(newRow, newCol) == Maze.Cell.Type.PASSAGE) {
                 neighbors.add(new Maze.Coordinate(newRow, newCol));
             }
