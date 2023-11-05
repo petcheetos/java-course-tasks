@@ -9,7 +9,6 @@ import edu.project2.Solvers.Solver;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class ConsoleMaze {
 
     public void run(Scanner scanner) {

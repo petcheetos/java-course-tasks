@@ -30,7 +30,8 @@ public class DFSMazeGenerator implements Generator {
             for (int[] step : DIRECTIONS) {
                 int currRow = currCoordinate.row() + step[0];
                 int currCol = currCoordinate.col() + step[1];
-                if (currCol >= 0 && currRow >= 0 && currCol < width && currRow < height && !visited[currRow][currCol]) {
+                if (currCol >= 0 && currRow >= 0 && currCol < width && currRow < height
+                    && !visited[currRow][currCol]) {
                     neighbors.add(step);
                 }
             }
@@ -39,7 +40,10 @@ public class DFSMazeGenerator implements Generator {
                 int newRow = currCoordinate.row() + nextStep[0] / 2;
                 int newCol = currCoordinate.col() + nextStep[1] / 2;
                 maze.setCellTypeAt(newRow, newCol, Maze.Cell.Type.PASSAGE);
-                stack.push(new Maze.Coordinate(currCoordinate.row() + nextStep[0], currCoordinate.col() + nextStep[1]));
+                stack.push(new Maze.Coordinate(
+                    currCoordinate.row() + nextStep[0],
+                    currCoordinate.col() + nextStep[1]
+                ));
             } else {
                 stack.pop();
             }

@@ -55,4 +55,3 @@ public class PrimMazeGenerator implements Generator {
         return maze;
     }
 }
-
