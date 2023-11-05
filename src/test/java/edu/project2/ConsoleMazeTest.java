@@ -1,5 +1,8 @@
 package edu.project2;
 
+import edu.project2.Generators.DFSMazeGenerator;
+import edu.project2.Generators.Generator;
+import edu.project2.Generators.PrimMazeGenerator;
 import edu.project2.Solvers.BFSMazeSolver;
 import edu.project2.Solvers.DFSMazeSolver;
 import edu.project2.Solvers.Solver;
@@ -9,6 +12,7 @@ import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 import static com.github.stefanbirkner.systemlambda.SystemLambda.withTextFromSystemIn;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConsoleMazeTest {
 
@@ -113,5 +117,17 @@ public class ConsoleMazeTest {
                 solver.solve(maze, new Maze.Coordinate(6, 2), new Maze.Coordinate(3, 3));
             }
         );
+    }
+
+    @Test
+    void testDFSGenerator() {
+        Generator generator = new DFSMazeGenerator();
+        assertThat(!Renderer.render(generator.generate(5, 5)).isEmpty());
+    }
+
+    @Test
+    void testPrimGenerator() {
+        Generator generator = new PrimMazeGenerator();
+        assertThat(!Renderer.render(generator.generate(5, 5)).isEmpty());
     }
 }
