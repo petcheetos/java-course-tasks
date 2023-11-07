@@ -39,14 +39,18 @@ public class AnimalFunctions {
     }
 
     //Task3
-    public static Map<Animal.Type, Integer> countAnimalsByTypes(List<Animal> animals) {
+    public static Map<Animal.Type, Long> countAnimalsByTypes(List<Animal> animals) {
         if (animals == null) {
             return null;
         }
-        Map<Animal.Type, Integer> map = new HashMap<>();
-        animals.forEach(animal -> map.put(animal.type(), map.getOrDefault(animal.type(), 0) + 1));
+        //Сколько животных каждого вида -> Map<Animal.Type, Integer>
+        Map<Animal.Type, Long> map = new HashMap<>();
+        map = animals.stream().collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
+        //animals.forEach(animal -> map.put(animal.type(), map.getOrDefault(animal.type(), 0) + 1));
         return map;
     }
+    //phoneStream.collect(
+    //        Collectors.groupingBy(Phone::getCompany, Collectors.counting()));
 
     //Task4
     public static Animal findAnimalWithLongestName(List<Animal> animals) {
