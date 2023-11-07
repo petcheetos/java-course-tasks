@@ -430,10 +430,7 @@ public class AnimalFunctionsTest {
             () -> AnimalFunctions.findHeaviestFish(null)
         );
 
-        assertThrows(
-            NullPointerException.class,
-            () -> AnimalFunctions.findHeaviestFish(List.of(), null, List.of())
-        );
+        assertEquals(Optional.empty(), AnimalFunctions.findHeaviestFish(List.of(), null, List.of()));
     }
 
     @Test

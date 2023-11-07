@@ -1,15 +1,16 @@
 package edu.hw4;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AnimalFunctions {
     private static final String NULL_ERROR_MSG = "List can not be null";
@@ -221,17 +222,13 @@ public class AnimalFunctions {
 
     //Task18
     public static Optional<Animal> findHeaviestFish(List<Animal>... animals) {
-        List<Animal> heavyFish = new ArrayList<>();
-        for (List<Animal> list : animals) {
-            if (list == null) {
-                throw new NullPointerException(NULL_ERROR_MSG);
-            }
-            heavyFish.add(list.stream()
-                .filter(animal -> animal.type() == Animal.Type.FISH)
-                .max(Comparator.comparingInt(Animal::weight))
-                .orElse(null));
+        if (animals == null) {
+            throw new NullPointerException(NULL_ERROR_MSG);
         }
-        return heavyFish.stream()
+        return Stream.of(animals)
+            .filter(Objects::nonNull)
+            .flatMap(List::stream)
+            .filter(animal -> animal.type() == Animal.Type.FISH)
             .max(Comparator.comparingInt(Animal::weight));
     }
 
