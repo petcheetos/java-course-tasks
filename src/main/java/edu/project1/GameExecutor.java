@@ -46,26 +46,21 @@ public final class GameExecutor {
             LOGGER.info(ConsoleOutput.REPEATED_SYMBOL);
             return status;
         }
-        while (attempts < MAX_ATTEMPTS) {
+        userInput.add(symbol);
+        if (attempts < MAX_ATTEMPTS) {
             ArrayList<Integer> foundSymbolIndexes = findSymbol(symbol);
             if (!foundSymbolIndexes.isEmpty()) {
                 LOGGER.info(ConsoleOutput.HIT);
                 for (var index : foundSymbolIndexes) {
-                    userInput.add(symbol);
                     maskedWord[index] = symbol;
                 }
                 status = (isWinner()) ? GameStatus.Winner : GameStatus.Default;
-                break;
             } else {
-                if (!userInput.contains(symbol)) {
-                    userInput.add(symbol);
-                    attempts++;
-                }
+                attempts++;
                 LOGGER.info(ConsoleOutput.MISTAKE + attempts + "/" + MAX_ATTEMPTS);
                 if (attempts == MAX_ATTEMPTS) {
                     status = GameStatus.Loser;
                 }
-                break;
             }
         }
         printHiddenString();
