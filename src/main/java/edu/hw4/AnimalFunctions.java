@@ -252,15 +252,12 @@ public class AnimalFunctions {
         if (errorMap == null) {
             return null;
         }
-        Map<String, String> map = new HashMap<>();
-        errorMap.forEach(
-            (String name, Set<ValidationError> set) -> {
-                StringBuilder stringBuilder = new StringBuilder();
-                set.forEach(error -> stringBuilder.append(error.toString()).append(" "));
-                map.put(name, stringBuilder.toString());
-                stringBuilder.delete(0, stringBuilder.length());
-            }
-        );
-        return map;
+        return errorMap.entrySet().stream()
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                entry -> entry.getValue().stream()
+                    .map(ValidationError::toString)
+                    .collect(Collectors.joining(" "))
+            ));
     }
 }

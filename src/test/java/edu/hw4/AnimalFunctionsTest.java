@@ -462,8 +462,8 @@ public class AnimalFunctionsTest {
         treeSet.add(ValidationError.WRONG_SEX);
         map.put("Mary", treeSet);
         Map<String, String> expectedMap = new HashMap<>();
-        expectedMap.put("", "WRONG_NAME ");
-        expectedMap.put("Mary", "WRONG_SEX WRONG_HEIGHT ");
+        expectedMap.put("", "WRONG_NAME");
+        expectedMap.put("Mary", "WRONG_SEX WRONG_HEIGHT");
         assertEquals(expectedMap, AnimalFunctions.getAnimalsWithErrorsToStringMap(map));
 
         assertNull(AnimalFunctions.getAnimalsWithErrorsToStringMap(null));
