@@ -64,9 +64,13 @@ public class AnimalFunctions {
         if (animals == null) {
             return null;
         }
-        List<Animal> female = animals.stream().filter(p -> p.sex() == Animal.Sex.F).toList();
-        List<Animal> male = animals.stream().filter(p -> p.sex() == Animal.Sex.M).toList();
-        return (female.size() > male.size()) ? Animal.Sex.F : Animal.Sex.M;
+        long female = animals.stream()
+            .filter(animal -> animal.sex() == Animal.Sex.F)
+            .count();
+        long male = animals.stream()
+            .filter(animal -> animal.sex() == Animal.Sex.M)
+            .count();
+        return (female > male) ? Animal.Sex.F : Animal.Sex.M;
     }
 
     //Task6
