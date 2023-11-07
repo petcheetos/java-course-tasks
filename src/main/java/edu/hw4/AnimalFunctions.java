@@ -2,7 +2,6 @@ package edu.hw4;
 
 import java.util.AbstractMap;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -208,17 +207,19 @@ public class AnimalFunctions {
         if (animals == null) {
             throw new NullPointerException(NULL_ERROR_MSG);
         }
-        int value = animals.stream()
-            .mapToInt(animal -> {
-                if (animal.type() == Animal.Type.DOG && animal.bites()) {
-                    return -1;
-                } else if (animal.type() == Animal.Type.SPIDER && animal.bites()) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }).sum();
-        return value > 0;
+        List<Animal> dogsAndSpiders = animals.stream()
+            .filter(animal -> animal.type() == Animal.Type.DOG || animal.type() == Animal.Type.SPIDER).toList();
+        long dogBites = dogsAndSpiders.stream()
+            .filter(dog -> dog.type() == Animal.Type.DOG && dog.bites())
+            .count();
+        long spiderBites = dogsAndSpiders.stream()
+            .filter(spider -> spider.type() == Animal.Type.SPIDER && spider.bites())
+            .count();
+        long dogs = dogsAndSpiders.stream().filter(animal -> animal.type() == Animal.Type.DOG)
+            .count();
+        long spiders = dogsAndSpiders.stream().filter(animal -> animal.type() == Animal.Type.SPIDER)
+            .count();
+        return (double) spiderBites / spiders > (double) dogBites / dogs;
     }
 
     //Task18
