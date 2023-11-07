@@ -1,5 +1,6 @@
 package edu.hw4;
 
+import java.util.AbstractMap;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -237,15 +238,13 @@ public class AnimalFunctions {
         if (animals == null) {
             return null;
         }
-        Map<String, Set<ValidationError>> map = new HashMap<>();
-        animals
-            .forEach(animal -> {
-                Set<ValidationError> currSet = ValidationError.validate(animal);
-                if (!currSet.isEmpty()) {
-                    map.put(animal.name(), currSet);
-                }
-            });
-        return map;
+        return animals.stream()
+            .map(animal -> new AbstractMap.SimpleEntry<>(animal.name(), ValidationError.validate(animal)))
+            .filter(entry -> !entry.getValue().isEmpty())
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue
+            ));
     }
 
     //Task20
