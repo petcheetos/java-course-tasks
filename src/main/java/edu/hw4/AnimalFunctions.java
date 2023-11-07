@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AnimalFunctions {
@@ -43,10 +45,8 @@ public class AnimalFunctions {
         if (animals == null) {
             return null;
         }
-
-        Map<Animal.Type, Long> map;
-        map = animals.stream().collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
-        return map;
+        return animals.stream()
+            .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
     }
 
     //Task4
@@ -78,14 +78,12 @@ public class AnimalFunctions {
         if (animals == null) {
             return null;
         }
-        Map<Animal.Type, Animal> map = new HashMap<>();
-        animals.forEach(animal -> {
-                if (!map.containsKey(animal.type()) || animal.weight() >= map.get(animal.type()).weight()) {
-                    map.put(animal.type(), animal);
-                }
-            }
-        );
-        return map;
+        return animals.stream()
+            .collect(Collectors.toMap(
+                Animal::type,
+                Function.identity(),
+                BinaryOperator.maxBy(Comparator.comparingInt(Animal::weight))
+            ));
     }
 
     //Task7
@@ -93,13 +91,9 @@ public class AnimalFunctions {
         if (animals == null) {
             return null;
         }
-        final Animal[] oldest = {animals.getFirst()};
-        animals.forEach(animal -> {
-            if (animal.age() > oldest[0].age()) {
-                oldest[0] = animal;
-            }
-        });
-        return oldest[0];
+        return animals.stream()
+            .max(Comparator.comparingInt(Animal::age))
+            .orElse(null);
     }
 
     //Task8
