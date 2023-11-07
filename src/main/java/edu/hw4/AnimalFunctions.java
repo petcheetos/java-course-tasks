@@ -35,7 +35,7 @@ public class AnimalFunctions {
         }
         return animals.stream()
             .sorted(Comparator.comparingInt(Animal::weight).reversed())
-            .limit(Math.min(k, animals.size())).collect(Collectors.toList());
+            .limit(k).collect(Collectors.toList());
     }
 
     //Task3
