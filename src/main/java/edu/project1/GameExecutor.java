@@ -9,7 +9,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class GameExecutor {
+public class GameExecutor {
     private static final Logger LOGGER = LogManager.getLogger();
     public GameStatus status = GameStatus.Default;
     private static final int MAX_ATTEMPTS = 5;
