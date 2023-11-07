@@ -180,14 +180,12 @@ public class AnimalFunctions {
         if (k <= 0 || l <= 0 || k >= l) {
             throw new IllegalArgumentException("Age range must be correct");
         }
-        Map<Animal.Type, Integer> map = new HashMap<>();
-        animals.forEach(animal -> {
-                if (k <= animal.age() && animal.age() <= l) {
-                    map.put(animal.type(), map.getOrDefault(animal.type(), 0) + animal.weight());
-                }
-            }
-        );
-        return map;
+        return animals.stream()
+            .filter(animal -> k <= animal.age() && animal.age() <= l)
+            .collect(Collectors.groupingBy(
+                Animal::type,
+                Collectors.summingInt(Animal::weight)
+            ));
     }
 
     //Task16
