@@ -44,18 +44,24 @@ public class ConsoleMaze {
 
     private Maze executeGeneration(String string, Scanner scanner) {
         Maze maze = null;
-        if (string.equals(ConsoleOutput.DFS)) {
-            Generator generator = new DFSMazeGenerator();
-            ConsoleOutput.askForSize();
-            maze = generator.generate(inputInt(scanner), inputInt(scanner));
-            ConsoleOutput.print(Renderer.render(maze));
-        } else if (string.equals(ConsoleOutput.PRIM)) {
-            Generator generator = new PrimMazeGenerator();
-            ConsoleOutput.askForSize();
-            maze = generator.generate(inputInt(scanner), inputInt(scanner));
-            ConsoleOutput.print(Renderer.render(maze));
-        } else {
-            ConsoleOutput.printErrorInput();
+        switch (string) {
+            case ConsoleOutput.DFS:
+                Generator dfsGenerator = new DFSMazeGenerator();
+                ConsoleOutput.askForSize();
+                maze = dfsGenerator.generate(inputInt(scanner), inputInt(scanner));
+                ConsoleOutput.print(Renderer.render(maze));
+                break;
+
+            case ConsoleOutput.PRIM:
+                Generator primGenerator = new PrimMazeGenerator();
+                ConsoleOutput.askForSize();
+                maze = primGenerator.generate(inputInt(scanner), inputInt(scanner));
+                ConsoleOutput.print(Renderer.render(maze));
+                break;
+
+            default:
+                ConsoleOutput.printErrorInput();
+                break;
         }
         return maze;
     }
