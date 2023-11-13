@@ -75,22 +75,27 @@ public class ConsoleMaze {
             int colEnd = inputInt(scanner);
             ConsoleOutput.chooseToSolve();
             String alg = inputString(scanner);
-            if (alg.equals(ConsoleOutput.BFS)) {
-                Solver solver = new BFSMazeSolver();
-                List<Maze.Coordinate> list = solver.solve(
-                    maze,
-                    new Maze.Coordinate(rowStart - 1, colStart - 1),
-                    new Maze.Coordinate(rowEnd - 1, colEnd - 1)
-                );
-                ConsoleOutput.print(Renderer.render(maze, list));
-            } else if (alg.equals(ConsoleOutput.DFS)) {
-                Solver solver = new DFSMazeSolver();
-                List<Maze.Coordinate> list = solver.solve(
-                    maze,
-                    new Maze.Coordinate(rowStart - 1, colStart - 1),
-                    new Maze.Coordinate(rowEnd - 1, colEnd - 1)
-                );
-                ConsoleOutput.print(Renderer.render(maze, list));
+            Solver solver;
+            List<Maze.Coordinate> list;
+
+            switch (alg) {
+                case ConsoleOutput.BFS:
+                    solver = new BFSMazeSolver();
+                    list = solver.solve(
+                        maze,
+                        new Maze.Coordinate(rowStart - 1, colStart - 1),
+                        new Maze.Coordinate(rowEnd - 1, colEnd - 1)
+                    );
+                    ConsoleOutput.print(Renderer.render(maze, list));
+
+                case ConsoleOutput.DFS:
+                    solver = new DFSMazeSolver();
+                    list = solver.solve(
+                        maze,
+                        new Maze.Coordinate(rowStart - 1, colStart - 1),
+                        new Maze.Coordinate(rowEnd - 1, colEnd - 1)
+                    );
+                    ConsoleOutput.print(Renderer.render(maze, list));
             }
         } else if (!string.equals(ConsoleOutput.GENERATE)) {
             ConsoleOutput.printErrorInput();
