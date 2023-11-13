@@ -3,7 +3,6 @@ package edu.project2.solvers;
 import edu.project2.ConsoleOutput;
 import edu.project2.Maze;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,7 +66,7 @@ public class BFSMazeSolver implements Solver {
             path.add(current);
             current = parentMap.get(current);
         }
-        path.add(start);;
+        path.add(start);
         path.reversed();
         return path;
     }
