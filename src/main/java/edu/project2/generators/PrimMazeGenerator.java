@@ -1,5 +1,6 @@
 package edu.project2.generators;
 
+import edu.project2.ConsoleOutput;
 import edu.project2.Maze;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,9 @@ public class PrimMazeGenerator implements Generator {
 
     @Override
     public Maze generate(int height, int width) {
+        if (height % 2 == 0 || width % 2 == 0) {
+            throw new IllegalArgumentException(ConsoleOutput.EVEN_NUMBS);
+        }
         Maze maze = new Maze(height, width);
         List<Maze.Coordinate> coordinatesToCheck = new ArrayList<>();
         int startRow = random.nextInt((height - 1) / 2) * 2 + 1;

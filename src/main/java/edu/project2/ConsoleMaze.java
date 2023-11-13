@@ -6,6 +6,7 @@ import edu.project2.generators.PrimMazeGenerator;
 import edu.project2.solvers.BFSMazeSolver;
 import edu.project2.solvers.DFSMazeSolver;
 import edu.project2.solvers.Solver;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,6 +31,7 @@ public class ConsoleMaze {
                 }
             } catch (IllegalArgumentException | NullPointerException e) {
                 System.err.println(e.getMessage());
+                scanner.nextLine();
             }
         }
     }
@@ -54,7 +56,13 @@ public class ConsoleMaze {
             return null;
         }
         ConsoleOutput.askForSize();
-        maze = generator.generate(inputInt(scanner), inputInt(scanner));
+        try {
+            maze = generator.generate(inputInt(scanner), inputInt(scanner));
+        } catch (InputMismatchException e) {
+            ConsoleOutput.printErrorInput();
+            scanner.nextLine();
+            return null;
+        }
         ConsoleOutput.print(Renderer.render(maze));
         return maze;
     }

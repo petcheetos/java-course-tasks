@@ -1,5 +1,6 @@
 package edu.project2.generators;
 
+import edu.project2.ConsoleOutput;
 import edu.project2.Maze;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,9 @@ public class DFSMazeGenerator implements Generator {
 
     @Override
     public Maze generate(int height, int width) {
+        if (height % 2 == 0 || width % 2 == 0) {
+            throw new IllegalArgumentException(ConsoleOutput.EVEN_NUMBS);
+        }
         Stack<Maze.Coordinate> stack = new Stack<>();
         boolean[][] visited = new boolean[height][width];
         Maze maze = new Maze(height, width);

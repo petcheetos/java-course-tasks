@@ -38,6 +38,7 @@ public class ConsoleOutput {
     public static final String GENERATE = "g";
     public static final String SOLVE = "s";
     public static final String QUIT = "quit";
+    public static final String EVEN_NUMBS = "Please, enter odd numbers";
 
     private ConsoleOutput() {
     }
