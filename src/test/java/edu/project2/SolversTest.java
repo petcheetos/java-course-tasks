@@ -1,8 +1,8 @@
 package edu.project2;
 
-import edu.project2.Solvers.BFSMazeSolver;
-import edu.project2.Solvers.DFSMazeSolver;
-import edu.project2.Solvers.Solver;
+import edu.project2.solvers.BFSMazeSolver;
+import edu.project2.solvers.DFSMazeSolver;
+import edu.project2.solvers.Solver;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;

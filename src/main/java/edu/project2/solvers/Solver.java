@@ -1,4 +1,4 @@
-package edu.project2.Solvers;
+package edu.project2.solvers;
 
 import edu.project2.Maze;
 import java.util.List;

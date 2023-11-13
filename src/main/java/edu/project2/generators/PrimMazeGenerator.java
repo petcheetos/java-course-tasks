@@ -1,4 +1,4 @@
-package edu.project2.Generators;
+package edu.project2.generators;
 
 import edu.project2.Maze;
 import java.util.ArrayList;

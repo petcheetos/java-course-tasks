@@ -1,11 +1,11 @@
 package edu.project2;
 
-import edu.project2.Generators.DFSMazeGenerator;
-import edu.project2.Generators.Generator;
-import edu.project2.Generators.PrimMazeGenerator;
-import edu.project2.Solvers.BFSMazeSolver;
-import edu.project2.Solvers.DFSMazeSolver;
-import edu.project2.Solvers.Solver;
+import edu.project2.generators.DFSMazeGenerator;
+import edu.project2.generators.Generator;
+import edu.project2.generators.PrimMazeGenerator;
+import edu.project2.solvers.BFSMazeSolver;
+import edu.project2.solvers.DFSMazeSolver;
+import edu.project2.solvers.Solver;
 import java.util.List;
 import java.util.Scanner;
 
