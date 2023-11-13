@@ -8,9 +8,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ConsoleMaze consoleMaze = new ConsoleMaze();
-        consoleMaze.run(scanner);
-        scanner.close();
+        try (Scanner scanner = new Scanner(System.in)) {
+            ConsoleMaze consoleMaze = new ConsoleMaze();
+            consoleMaze.run(scanner);
+        }
     }
 }
