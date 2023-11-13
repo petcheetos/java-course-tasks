@@ -44,25 +44,18 @@ public class ConsoleMaze {
 
     private Maze executeGeneration(String string, Scanner scanner) {
         Maze maze = null;
-        switch (string) {
-            case ConsoleOutput.DFS:
-                Generator dfsGenerator = new DFSMazeGenerator();
-                ConsoleOutput.askForSize();
-                maze = dfsGenerator.generate(inputInt(scanner), inputInt(scanner));
-                ConsoleOutput.print(Renderer.render(maze));
-                break;
-
-            case ConsoleOutput.PRIM:
-                Generator primGenerator = new PrimMazeGenerator();
-                ConsoleOutput.askForSize();
-                maze = primGenerator.generate(inputInt(scanner), inputInt(scanner));
-                ConsoleOutput.print(Renderer.render(maze));
-                break;
-
-            default:
-                ConsoleOutput.printErrorInput();
-                break;
+        Generator generator = switch (string) {
+            case ConsoleOutput.DFS -> new DFSMazeGenerator();
+            case ConsoleOutput.PRIM -> new PrimMazeGenerator();
+            default -> null;
+        };
+        if (generator == null) {
+            ConsoleOutput.printErrorInput();
+            return null;
         }
+        ConsoleOutput.askForSize();
+        maze = generator.generate(inputInt(scanner), inputInt(scanner));
+        ConsoleOutput.print(Renderer.render(maze));
         return maze;
     }
 
@@ -75,28 +68,21 @@ public class ConsoleMaze {
             int colEnd = inputInt(scanner);
             ConsoleOutput.chooseToSolve();
             String alg = inputString(scanner);
-            Solver solver;
-            List<Maze.Coordinate> list;
-
-            switch (alg) {
-                case ConsoleOutput.BFS:
-                    solver = new BFSMazeSolver();
-                    list = solver.solve(
-                        maze,
-                        new Maze.Coordinate(rowStart - 1, colStart - 1),
-                        new Maze.Coordinate(rowEnd - 1, colEnd - 1)
-                    );
-                    ConsoleOutput.print(Renderer.render(maze, list));
-
-                case ConsoleOutput.DFS:
-                    solver = new DFSMazeSolver();
-                    list = solver.solve(
-                        maze,
-                        new Maze.Coordinate(rowStart - 1, colStart - 1),
-                        new Maze.Coordinate(rowEnd - 1, colEnd - 1)
-                    );
-                    ConsoleOutput.print(Renderer.render(maze, list));
+            Solver solver = switch (alg) {
+                case ConsoleOutput.BFS -> new BFSMazeSolver();
+                case ConsoleOutput.DFS -> new DFSMazeSolver();
+                default -> null;
+            };
+            if (solver == null) {
+                ConsoleOutput.printErrorInput();
+                return;
             }
+            List<Maze.Coordinate> list = solver.solve(
+                maze,
+                new Maze.Coordinate(rowStart - 1, colStart - 1),
+                new Maze.Coordinate(rowEnd - 1, colEnd - 1)
+            );
+            ConsoleOutput.print(Renderer.render(maze, list));
         } else if (!string.equals(ConsoleOutput.GENERATE)) {
             ConsoleOutput.printErrorInput();
         }

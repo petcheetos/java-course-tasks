@@ -7,6 +7,7 @@ public class ConsoleOutput {
     public static final String INCORRECT_TYPE = "Type must be correct";
     public static final String CELL_IS_NOT_PASSAGE = "Cell is not a passage cell";
     public static final String ERROR_INPUT = "Incorrect input";
+    public static final String ERROR = "Error";
     public static final String ASK_FOR_SIZE = "Input a height and width. Enter odd numbers";
     public static final String ASK_FOR_COORDINATES =
         "Enter the coordinates: row and column for start point, then for end point";
@@ -66,6 +67,10 @@ public class ConsoleOutput {
     }
 
     public static void print(String string) {
-        System.out.println(string);
+        if (string == null) {
+            System.err.println(ERROR);
+        } else {
+            System.out.println(string);
+        }
     }
 }
