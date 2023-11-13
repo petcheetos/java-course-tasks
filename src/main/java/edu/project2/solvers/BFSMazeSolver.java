@@ -67,8 +67,8 @@ public class BFSMazeSolver implements Solver {
             path.add(current);
             current = parentMap.get(current);
         }
-        path.add(start);
-        Collections.reverse(path);
+        path.add(start);;
+        path.reversed();
         return path;
     }
 }
