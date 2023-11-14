@@ -8,7 +8,7 @@ public class StringManager {
     }
 
     public static boolean isSubsequence(String sub, String string) {
-        Pattern pattern = Pattern.compile(sub);
-        return pattern.matcher(string).find();
+        Pattern patternMatcher = Pattern.compile("^.*" + Pattern.quote(sub) + ".*$");
+        return patternMatcher.matcher(string).find();
     }
 }

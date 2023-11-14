@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 public class CarNumberValidator {
     public static final String ALLOWED_LETTERS = "АВЕКМНОРСТУХ";
+
     private CarNumberValidator() {
     }
 

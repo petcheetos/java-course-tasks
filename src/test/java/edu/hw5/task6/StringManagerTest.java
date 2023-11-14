@@ -10,6 +10,7 @@ public class StringManagerTest {
         "abc, achfdbaabgabcaabg, true",
         "123, 789465123, true",
         "cat, abdcdef, false",
+        "f\\d, assf\\daasda, true",
         "kit, kit, true",})
     @ParameterizedTest
     void testIsSubsequence(String sub, String string, boolean expected) {
