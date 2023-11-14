@@ -25,7 +25,8 @@ public class FileManager {
         int copyIndex = 1;
         Path copiedFile;
         do {
-            String copyName = originFileName + " — копия" + (copyIndex > 1 ? " (" + copyIndex + ")" : "") + originFileExtension;
+            String copyName = originFileName + " — копия" + (copyIndex > 1 ? " (" + copyIndex + ")" : "")
+                + originFileExtension;
             copiedFile = Paths.get(fileDirectory.toString(), copyName);
             copyIndex++;
         } while (Files.exists(copiedFile));

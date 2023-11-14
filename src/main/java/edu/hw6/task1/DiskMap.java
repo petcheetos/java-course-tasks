@@ -127,15 +127,3 @@ public class DiskMap implements Map<String, String> {
         }
     }
 }
-
-//    //C:\javacourse\src\main\java\edu\hw6\task1
-//    //Path path = Paths.get("C:", "Users", "username", "Documents", "file.txt");
-//    public static void main(String[] args) {
-//        Path path = Paths.get("C:", "javacourse", "src", "main", "java", "edu", "hw6", "task1", "text.txt");
-//        DiskMap diskMap = new DiskMap(path);
-//        diskMap.put("second", "dog");
-//        diskMap.saveToFile();
-//        diskMap.remove("first");
-//        diskMap.saveToFile();
-//        System.out.println(diskMap.containsKey("first"));
-//    }
