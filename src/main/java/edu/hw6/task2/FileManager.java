@@ -31,6 +31,5 @@ public class FileManager {
             copyIndex++;
         } while (Files.exists(copiedFile));
         Files.copy(path, copiedFile);
-
     }
 }
