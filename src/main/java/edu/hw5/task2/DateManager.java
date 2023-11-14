@@ -18,19 +18,16 @@ public class DateManager {
             throw new IllegalArgumentException();
         }
         List<LocalDate> fridays13 = new ArrayList<>();
-        boolean reachedFriday = false;
         LocalDate firstDay = LocalDate.of(year, 1, 1);
         LocalDate lastDay = LocalDate.of(year, 12, 31);
+        while (firstDay.getDayOfMonth() != 13) {
+            firstDay = firstDay.plusDays(1);
+        }
         while (firstDay.isBefore(lastDay)) {
             if (firstDay.getDayOfWeek() == DayOfWeek.FRIDAY && firstDay.getDayOfMonth() == THIRTEEN) {
                 fridays13.add(firstDay);
-                reachedFriday = true;
             }
-            if (reachedFriday) {
-                firstDay = firstDay.plusWeeks(1);
-            } else {
-                firstDay = firstDay.plusDays(1);
-            }
+            firstDay = firstDay.plusMonths(1);
         }
         return fridays13;
     }
