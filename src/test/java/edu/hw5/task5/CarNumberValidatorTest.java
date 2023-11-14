@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CarNumberValidatorTest {
 
     @CsvSource({
-        "A123BE777, true",
-        "O777OO177, true",
+        "А123ВЕ777, true",
+        "О777ОО177, true",
         "123АВЕ777, false",
         "А123ВЕ7777, false",
         "А123ВГ77, false"})
