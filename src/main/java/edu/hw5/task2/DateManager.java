@@ -18,11 +18,8 @@ public class DateManager {
             throw new IllegalArgumentException();
         }
         List<LocalDate> fridays13 = new ArrayList<>();
-        LocalDate firstDay = LocalDate.of(year, 1, 1);
+        LocalDate firstDay = LocalDate.of(year, 1, 13);
         LocalDate lastDay = LocalDate.of(year, 12, 31);
-        while (firstDay.getDayOfMonth() != 13) {
-            firstDay = firstDay.plusDays(1);
-        }
         while (firstDay.isBefore(lastDay)) {
             if (firstDay.getDayOfWeek() == DayOfWeek.FRIDAY && firstDay.getDayOfMonth() == THIRTEEN) {
                 fridays13.add(firstDay);
