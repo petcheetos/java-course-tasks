@@ -14,7 +14,7 @@ public class DiskMapTest {
 
     @Test
     void testDiskMap() throws IOException {
-        File file = new File("src/main/java/edu/hw6/task1/diskmap.txt");
+        File file = new File("src/main/java/edu/hw6/resources/diskmap.txt");
         DiskMap diskMap = new DiskMap(file.toPath());
 
         assertTrue(diskMap.isEmpty());
@@ -47,7 +47,7 @@ public class DiskMapTest {
     void testDiskMapException() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> new DiskMap(Path.of("src/main/java/edu/hw6/task1/text.txt"))
+            () -> new DiskMap(Path.of("src/main/java/edu/hw6/resources/text.txt"))
         );
     }
 }

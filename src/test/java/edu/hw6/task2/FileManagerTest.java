@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FileManagerTest {
-
     @Test
     void cloneFileTest() throws IOException {
 
@@ -17,17 +16,17 @@ public class FileManagerTest {
             () -> FileManager.cloneFile(null)
         );
 
-        FileManager.cloneFile(Path.of("src/main/java/edu/hw6/task2/file.txt"));
+        FileManager.cloneFile(Path.of("src/main/java/edu/hw6/resources/file.txt"));
         assertTrue(Files.exists(
-            Path.of("src/main/java/edu/hw6/task2/file — копия.txt")
+            Path.of("src/main/java/edu/hw6/resources/file — копия.txt")
         ));
 
-        FileManager.cloneFile(Path.of("src/main/java/edu/hw6/task2/file.txt"));
+        FileManager.cloneFile(Path.of("src/main/java/edu/hw6/resources/file.txt"));
         assertTrue(Files.exists(
-            Path.of("src/main/java/edu/hw6/task2/file — копия (2).txt")
+            Path.of("src/main/java/edu/hw6/resources/file — копия (2).txt")
         ));
 
-        Files.delete(Path.of("src/main/java/edu/hw6/task2/file — копия.txt"));
-        Files.delete(Path.of("src/main/java/edu/hw6/task2/file — копия (2).txt"));
+        Files.delete(Path.of("src/main/java/edu/hw6/resources/file — копия.txt"));
+        Files.delete(Path.of("src/main/java/edu/hw6/resources/file — копия (2).txt"));
     }
 }
