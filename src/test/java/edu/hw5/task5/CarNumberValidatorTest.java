@@ -11,6 +11,7 @@ public class CarNumberValidatorTest {
         "О777ОО177, true",
         "123АВЕ777, false",
         "А123ВЕ7777, false",
+        "А000ВЕ777, false",
         "А123ВГ77, false"})
     @ParameterizedTest
     void testCheckNumber(String str, boolean expected) {

@@ -10,6 +10,7 @@ public class CarNumberValidator {
 
     public static boolean isNumberCorrect(String number) {
         Pattern pattern = Pattern.compile("^[" + ALLOWED_LETTERS + "]\\d{3}[" + ALLOWED_LETTERS + "]{2}\\d{3}$");
-        return pattern.matcher(number).matches();
+        Pattern except = Pattern.compile("0{3}");
+        return pattern.matcher(number).matches() && !except.matcher(number).find();
     }
 }
