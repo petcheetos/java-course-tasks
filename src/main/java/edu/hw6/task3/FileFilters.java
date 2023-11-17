@@ -4,7 +4,6 @@ import java.nio.file.Files;
 import java.util.regex.Pattern;
 
 public class FileFilters {
-
     public static final AbstractFilter REGULAR_FILE = Files::isRegularFile;
     public static final AbstractFilter READABLE = Files::isReadable;
 

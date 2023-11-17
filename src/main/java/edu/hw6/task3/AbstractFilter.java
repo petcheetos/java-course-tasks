@@ -6,6 +6,7 @@ import java.nio.file.Path;
 
 @FunctionalInterface
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {
+
     boolean accept(Path entry) throws IOException;
 
     default AbstractFilter and(AbstractFilter nextFilter) {

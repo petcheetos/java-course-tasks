@@ -12,6 +12,7 @@ import java.util.zip.Adler32;
 import java.util.zip.CheckedOutputStream;
 
 public class OutputStreamsChain {
+
     private OutputStreamsChain() {
     }
 
