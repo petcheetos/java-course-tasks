@@ -47,7 +47,7 @@ public class DiskMapTest {
     void testDiskMapException() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> new DiskMap(Path.of("src/main/java/edu/hw6/resources/text.txt"))
+            () -> new DiskMap(Path.of("src/main/java/edu/hw6/resources/unreal.txt"))
         );
     }
 }
