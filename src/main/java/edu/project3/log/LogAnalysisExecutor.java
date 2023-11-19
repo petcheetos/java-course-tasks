@@ -3,7 +3,6 @@ package edu.project3.log;
 import edu.project3.ConsoleHandler;
 import edu.project3.export.AsciiDocExporter;
 import edu.project3.export.MarkdownExporter;
-import java.util.Map;
 
 public class LogAnalysisExecutor {
 
