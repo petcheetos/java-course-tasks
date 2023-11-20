@@ -58,22 +58,29 @@ public class DiskMap implements Map<String, String> {
     @Nullable
     @Override
     public String put(String key, String value) {
-        return inMemoryCache.put(key, value);
+        String putELem = inMemoryCache.put(key, value);
+        saveToFile();
+        return putELem;
     }
 
     @Override
     public String remove(Object key) {
-        return inMemoryCache.remove(key);
+        var removed = inMemoryCache.remove(key);
+        saveToFile();
+        return removed;
+
     }
 
     @Override
     public void putAll(@NotNull Map<? extends String, ? extends String> m) {
         inMemoryCache.putAll(m);
+        saveToFile();
     }
 
     @Override
     public void clear() {
         inMemoryCache.clear();
+        saveToFile();
     }
 
     @NotNull
@@ -94,7 +101,7 @@ public class DiskMap implements Map<String, String> {
         return inMemoryCache.entrySet();
     }
 
-    public void saveToFile() {
+    private void saveToFile() {
         try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
             for (Entry<String, String> entry : entrySet()) {
                 writer.write(entry.getKey() + SPLITTER + entry.getValue());

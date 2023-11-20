@@ -26,18 +26,16 @@ public class DiskMapTest {
         assertTrue(diskMap.containsKey("firstKey"));
         assertTrue(diskMap.containsValue("firstValue"));
         assertFalse(diskMap.containsKey("secondKey"));
-        diskMap.saveToFile();
 
         String content = Files.readString(file.toPath());
         assertEquals("firstKey:firstValue", content.trim());
 
         diskMap.clear();
-        diskMap.saveToFile();
 
         diskMap.put("secondKey", "secondValue");
-        diskMap.saveToFile();
+
         diskMap.remove("secondKey");
-        diskMap.saveToFile();
+
         assertFalse(diskMap.containsKey("secondKey"));
 
         assertTrue(diskMap.isEmpty());
