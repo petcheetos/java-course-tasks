@@ -33,9 +33,7 @@ public class DiskMapTest {
         diskMap.clear();
 
         diskMap.put("secondKey", "secondValue");
-
         diskMap.remove("secondKey");
-
         assertFalse(diskMap.containsKey("secondKey"));
 
         assertTrue(diskMap.isEmpty());
