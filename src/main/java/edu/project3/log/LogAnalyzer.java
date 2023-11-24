@@ -24,7 +24,8 @@ public class LogAnalyzer {
             logsReader = new FileLogsReader();
         }
         String readLogs = logsReader.read(command.uri());
-        logsList = LogParser.getLogsList(readLogs);
+        LogParser parser = new LogParser();
+        logsList = parser.getLogsList(readLogs);
         checkParameters();
     }
 

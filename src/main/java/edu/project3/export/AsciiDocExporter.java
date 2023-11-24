@@ -5,16 +5,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
-public class AsciiDocExporter {
-    private static final String LINE = "|=======================|===================|\n";
-    private static final String FORMAT = "| %-22s | %-17s |\n";
-    private static final String HEADER = "[options=\"header\"]\n";
-    private static final String SEPARATOR = "|===\n";
+public class AsciiDocExporter implements Exporter {
+    private final String line = "|=======================|===================|\n";
+    private final String format = "| %-22s | %-17s |\n";
+    private final String header = "[options=\"header\"]\n";
+    private final String separator = "|===\n";
 
-    private AsciiDocExporter() {
+    public AsciiDocExporter() {
     }
 
-    public static void writeAsciiDocToFile(String content, String outputPath) {
+    @Override
+    public void writeToFile(String content, String outputPath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
             writer.write(content);
         } catch (IOException e) {
@@ -22,48 +23,45 @@ public class AsciiDocExporter {
         }
     }
 
-    public static String convertGeneralInfo(Map<String, String> generalMetrics) {
+    @Override
+    public String convertGeneralInfo(Map<String, String> generalMetrics) {
         StringBuilder result = new StringBuilder();
         result.append("\n[[general-information]]\n");
         result.append("== General Information\n\n");
-        result.append(HEADER);
-        result.append(SEPARATOR);
+        result.append(header);
+        result.append(separator);
         result.append("| Metric                 |               Value\n");
-        result.append(LINE);
-
-        generalMetrics.forEach((key, value) -> result.append(String.format(FORMAT, key, value)));
-
-        result.append(SEPARATOR);
+        result.append(line);
+        generalMetrics.forEach((key, value) -> result.append(String.format(format, key, value)));
+        result.append(separator);
         return result.toString();
     }
 
-    public static String convertResourcesRequested(Map<String, String> generalMetrics) {
+    @Override
+    public String convertResourcesRequested(Map<String, String> generalMetrics) {
         StringBuilder result = new StringBuilder();
         result.append("\n[[resources-requested]]\n");
         result.append("== Resources Requested\n\n");
-        result.append(HEADER);
-        result.append(SEPARATOR);
+        result.append(header);
+        result.append(separator);
         result.append("| Resource | Value\n");
-        result.append(LINE);
-
-        generalMetrics.forEach((key, value) -> result.append(String.format(FORMAT, key, value)));
-
-        result.append(SEPARATOR);
+        result.append(line);
+        generalMetrics.forEach((key, value) -> result.append(String.format(format, key, value)));
+        result.append(separator);
         return result.toString();
     }
 
-    public static String convertResponseCodeMetrics(Map<String, String> generalMetrics) {
+    @Override
+    public String convertResponseCodeMetrics(Map<String, String> generalMetrics) {
         StringBuilder result = new StringBuilder();
         result.append("\n[[response-code-metrics]]\n");
         result.append("== Response Code Metrics\n\n");
-        result.append(HEADER);
-        result.append(SEPARATOR);
+        result.append(header);
+        result.append(separator);
         result.append("| Code | Value\n");
-        result.append(LINE);
-
-        generalMetrics.forEach((key, value) -> result.append(String.format(FORMAT, key, value)));
-
-        result.append(SEPARATOR);
+        result.append(line);
+        generalMetrics.forEach((key, value) -> result.append(String.format(format, key, value)));
+        result.append(separator);
         return result.toString();
     }
 }

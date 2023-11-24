@@ -11,29 +11,25 @@ import org.apache.logging.log4j.Logger;
 public class ConsoleHandler {
     public static final Logger LOGGER = LogManager.getLogger();
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static String[] arguments;
-    private static final String PATH_COMMAND = "--path";
-    private static final String FROM_PARAM = "--from";
-    private static final String TO_PARAM = "--to";
-    private static final String FORMAT_COMMAND = "--format";
-    private static final String MARKDOWN_FORMAT = "markdown";
-    private static final String ADOC_FORMAT = "adoc";
     private static final String ERROR = "Incorrect arguments";
+    private final String[] arguments;
 
     ConsoleHandler(String[] args) {
         arguments = args;
     }
 
     public ConsoleCommand getCommand() {
+        final String markdownFormat = "markdown";
+        final String adocFormat = "adoc";
         URI pathUri = null;
         String from = null;
         String to = null;
-        String format = MARKDOWN_FORMAT;
+        String format = markdownFormat;
         int argIndex = 0;
         while (argIndex < arguments.length) {
             String arg = arguments[argIndex];
             switch (arg) {
-                case PATH_COMMAND:
+                case "--path":
                     try {
                         pathUri = new URI(arguments[++argIndex]);
                     } catch (URISyntaxException exception) {
@@ -42,13 +38,13 @@ public class ConsoleHandler {
                     }
                    //pathUri = new File(arguments[++argIndex]).toURI();
                     break;
-                case FROM_PARAM:
+                case "--from":
                     from = arguments[++argIndex];
                     break;
-                case TO_PARAM:
+                case "--to":
                     to = arguments[++argIndex];
                     break;
-                case FORMAT_COMMAND:
+                case "--format":
                     format = arguments[++argIndex];
                     break;
                 default:
@@ -62,8 +58,8 @@ public class ConsoleHandler {
         LocalDate dateTo = getDate(to);
 
         ConsoleCommand.ResultFileFormat fileFormat = ConsoleCommand.ResultFileFormat.Markdown;
-        if (format != null && !format.equals(MARKDOWN_FORMAT)) {
-            if (format.equals(ADOC_FORMAT)) {
+        if (format != null && !format.equals(markdownFormat)) {
+            if (format.equals(adocFormat)) {
                 fileFormat = ConsoleCommand.ResultFileFormat.ADoc;
             }
         }
@@ -75,7 +71,7 @@ public class ConsoleHandler {
             try {
                 return LocalDate.parse(string, DATE_FORMATTER);
             } catch (DateTimeParseException exception) {
-                LOGGER.error(ERROR);
+                LOGGER.error(ConsoleHandler.ERROR);
             }
         }
         return null;

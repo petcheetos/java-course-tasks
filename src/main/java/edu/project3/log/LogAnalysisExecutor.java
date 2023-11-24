@@ -2,6 +2,7 @@ package edu.project3.log;
 
 import edu.project3.ConsoleHandler;
 import edu.project3.export.AsciiDocExporter;
+import edu.project3.export.Exporter;
 import edu.project3.export.MarkdownExporter;
 
 public class LogAnalysisExecutor {
@@ -22,21 +23,17 @@ public class LogAnalysisExecutor {
         LogStatistics logStatistics,
         ConsoleHandler.ConsoleCommand.ResultFileFormat resultFileFormat, String path
     ) {
+        Exporter exporter;
         if (resultFileFormat == ConsoleHandler.ConsoleCommand.ResultFileFormat.ADoc) {
-            String generalRes = AsciiDocExporter.convertGeneralInfo(logStatistics.getGeneralMetrics());
-            String resourcesRequestedRes =
-                AsciiDocExporter.convertResourcesRequested(logStatistics.getResourcesRequested());
-            String responseCodeMetricsRes =
-                AsciiDocExporter.convertResponseCodeMetrics(logStatistics.getResponseCodeMetrics());
-            AsciiDocExporter.writeAsciiDocToFile(generalRes + resourcesRequestedRes + responseCodeMetricsRes, path);
-
+            exporter = new AsciiDocExporter();
         } else {
-            String generalRes = MarkdownExporter.convertGeneralInfo(logStatistics.getGeneralMetrics());
-            String resourcesRequestedRes =
-                MarkdownExporter.convertResourcesRequested(logStatistics.getResourcesRequested());
-            String responseCodeMetricsRes =
-                MarkdownExporter.convertResponseCodeMetrics(logStatistics.getResponseCodeMetrics());
-            MarkdownExporter.writeMarkdownToFile(generalRes + resourcesRequestedRes + responseCodeMetricsRes, path);
+            exporter = new MarkdownExporter();
         }
+        String generalRes = exporter.convertGeneralInfo(logStatistics.getGeneralMetrics());
+        String resourcesRequestedRes =
+            exporter.convertResourcesRequested(logStatistics.getResourcesRequested());
+        String responseCodeMetricsRes =
+            exporter.convertResponseCodeMetrics(logStatistics.getResponseCodeMetrics());
+        exporter.writeToFile(generalRes + resourcesRequestedRes + responseCodeMetricsRes, path);
     }
 }

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LogStatistics {
-
     private final Map<String, String> generalMetrics;
     private final Map<String, String> resourcesRequested;
     private final Map<String, String> responseCodeMetrics;
