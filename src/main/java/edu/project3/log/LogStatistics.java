@@ -1,18 +1,18 @@
 package edu.project3.log;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class LogStatistics {
-    private final Map<String, String> generalMetrics;
-    private final Map<String, String> resourcesRequested;
-    private final Map<String, String> responseCodeMetrics;
+    private final TreeMap<String, String> generalMetrics;
+    private final TreeMap<String, String> resourcesRequested;
+    private final TreeMap<String, String> responseCodeMetrics;
     private final LogAnalyzer logAnalyzer;
 
     public LogStatistics(LogAnalyzer logAnalyzer) {
-        this.generalMetrics = new HashMap<>();
-        this.resourcesRequested = new HashMap<>();
-        this.responseCodeMetrics = new HashMap<>();
+        this.generalMetrics = new TreeMap<>();
+        this.resourcesRequested = new TreeMap<>();
+        this.responseCodeMetrics = new TreeMap<>();
         this.logAnalyzer = logAnalyzer;
     }
 
