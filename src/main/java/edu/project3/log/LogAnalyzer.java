@@ -48,7 +48,7 @@ public class LogAnalyzer {
         for (Log log : logsList) {
             if (log != null) {
                 String requestAddress = log.requestAddress().toString();
-                resourceCounts.put(requestAddress, resourceCounts.getOrDefault(requestAddress, 0L) + 1);
+                resourceCounts.merge(requestAddress, 1L, Long::sum);
             }
         }
         return resourceCounts;
@@ -59,7 +59,7 @@ public class LogAnalyzer {
         for (Log log : logsList) {
             if (log != null) {
                 int responseCode = log.responseCode();
-                responseCodeCounts.put(responseCode, responseCodeCounts.getOrDefault(responseCode, 0L) + 1);
+                responseCodeCounts.merge(responseCode, 1L, Long::sum);
             }
         }
         return responseCodeCounts;
