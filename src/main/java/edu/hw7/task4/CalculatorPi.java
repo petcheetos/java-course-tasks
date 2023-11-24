@@ -16,7 +16,7 @@ public class CalculatorPi {
     public static double doSingleThreadAlgorithm(int iterations) {
         double totalCount = 0;
         double circleCount = 0;
-        Random random = new Random();
+        Random random = ThreadLocalRandom.current();
         for (int i = 0; i < iterations; i++) {
             double randomWidth = random.nextDouble();
             double randomHeight = random.nextDouble();
