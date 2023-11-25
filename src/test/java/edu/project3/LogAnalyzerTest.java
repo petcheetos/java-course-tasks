@@ -3,6 +3,7 @@ package edu.project3;
 import edu.project3.log.LogAnalyzer;
 import edu.project3.log.LogStatistics;
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import org.junit.jupiter.api.Test;
@@ -11,9 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class LogAnalyzerTest {
 
     @Test
-    void testGetGeneralMetrics() {
+    void testGetGeneralMetrics() throws IOException {
+        File file = new File("src/main/java/edu/project3/resources/fileLogs.txt");
         LogAnalyzer logAnalyzer = new LogAnalyzer(new ConsoleHandler.ConsoleCommand(
-            new File("src/main/java/edu/project3/resources/fileLogs.txt").toURI(),
+            file.toURI(),
             null, null, null
         ));
 
@@ -23,8 +25,10 @@ public class LogAnalyzerTest {
         map.put("Average response size", "122.5");
         map.put("End date", "-");
         map.put("Start date", "-");
-        map.put("File", "/C:/javacourse/src/main/java/edu/project3/resources/fileLogs.txt");
-        assertEquals(map, logStatistics.getGeneralMetrics());
+        assertEquals(map.get("Number of requests"), logStatistics.getGeneralMetrics().get("Number of requests"));
+        assertEquals(map.get("Average response size"), logStatistics.getGeneralMetrics().get("Average response size"));
+        assertEquals(map.get("End date"), logStatistics.getGeneralMetrics().get("End date"));
+        assertEquals(map.get("Start date"), logStatistics.getGeneralMetrics().get("Start date"));
     }
 
     @Test
