@@ -13,10 +13,15 @@ public class LogAnalysisExecutor {
     public static void run(ConsoleHandler.ConsoleCommand command) {
         LogAnalyzer logAnalyzer = new LogAnalyzer(command);
         LogStatistics logStatistics = new LogStatistics(logAnalyzer);
+        String path;
 
-        export(logStatistics, command.format(),
-            "src/main/java/edu/project3/resources/file.adoc"
-        );
+        if (command.format() == ConsoleHandler.ConsoleCommand.ResultFileFormat.ADoc) {
+            path = "src/main/java/edu/project3/resources/file.adoc";
+        } else {
+            path = "src/main/java/edu/project3/resources/file.md";
+        }
+
+        export(logStatistics, command.format(), path);
     }
 
     private static void export(

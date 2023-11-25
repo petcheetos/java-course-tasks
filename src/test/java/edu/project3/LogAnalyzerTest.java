@@ -2,12 +2,19 @@ package edu.project3;
 
 import edu.project3.log.LogAnalyzer;
 import edu.project3.log.LogStatistics;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 import java.util.TreeMap;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LogAnalyzerTest {
 
@@ -56,5 +63,50 @@ public class LogAnalyzerTest {
         map.put("200", "1");
         map.put("304", "3");
         assertEquals(map, logStatistics.getResponseCodeMetrics());
+    }
+
+    @Test
+    void testAnalyzerExecutorMDFile() throws IOException {
+
+        String fileName = "src/main/java/edu/project3/resources/file.md";
+
+        try (BufferedWriter bf = Files.newBufferedWriter(
+            Path.of(fileName),
+            StandardOpenOption.TRUNCATE_EXISTING
+        )) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Main.main(new String[] {"--path",
+            "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"});
+
+        File file = new File(fileName);
+
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        assertNotNull(br.readLine());
+    }
+
+    @Test
+    void testAnalyzerExecutorADocFile() throws IOException {
+
+        String fileName = "src/main/java/edu/project3/resources/file.adoc";
+
+        try (BufferedWriter bf = Files.newBufferedWriter(
+            Path.of(fileName),
+            StandardOpenOption.TRUNCATE_EXISTING
+        )) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Main.main(new String[] {"--path",
+            "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs",
+            "--format", "adoc"});
+
+        File file = new File(fileName);
+
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        assertNotNull(br.readLine());
     }
 }
