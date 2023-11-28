@@ -1,5 +1,7 @@
 package edu.project3.log;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,17 +20,17 @@ public class LogStatistics {
 
     public Map<String, String> getGeneralMetrics() {
         takeGeneralInfo();
-        return generalMetrics;
+        return Collections.unmodifiableSortedMap(generalMetrics);
     }
 
     public Map<String, String> getResourcesRequested() {
         takeResourcesRequestedInfo();
-        return resourcesRequested;
+        return Collections.unmodifiableSortedMap(resourcesRequested);
     }
 
     public Map<String, String> getResponseCodeMetrics() {
         takeResponseCodeMetrics();
-        return responseCodeMetrics;
+        return Collections.unmodifiableSortedMap(responseCodeMetrics);
     }
 
     private void takeGeneralInfo() {
