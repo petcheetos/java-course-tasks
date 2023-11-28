@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LogAnalyzer {
-    private static List<Log> logsList;
-    private static ConsoleHandler.ConsoleCommand command;
+    private List<Log> logsList;
+    private ConsoleHandler.ConsoleCommand command;
 
     private LogAnalyzer() {
     }

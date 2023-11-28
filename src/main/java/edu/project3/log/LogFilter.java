@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class LogFilter {
     private static final int MAX_HOUR = 23;
-    private static final int  MAX_MIN = 23;
-    private static final int MAX_SECOND = 23;
+    private static final int MAX_MIN = 59;
+    private static final int MAX_SECOND = 59;
 
     private LogFilter() {
     }
