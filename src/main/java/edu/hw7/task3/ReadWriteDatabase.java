@@ -14,7 +14,6 @@ public class ReadWriteDatabase implements PersonDatabase {
     private final Map<String, List<Person>> addressMap;
     private final Map<String, List<Person>> phoneNumberMap;
     private final ReadWriteLock lock;
-    private final AtomicInteger size;
 
     public ReadWriteDatabase() {
         idMap = new HashMap<>();
@@ -22,7 +21,6 @@ public class ReadWriteDatabase implements PersonDatabase {
         addressMap = new HashMap<>();
         phoneNumberMap = new HashMap<>();
         lock = new ReentrantReadWriteLock();
-        size = new AtomicInteger(0);
     }
 
     @Override
@@ -86,10 +84,5 @@ public class ReadWriteDatabase implements PersonDatabase {
         } finally {
             lock.readLock().unlock();
         }
-    }
-
-    @Override
-    public int size() {
-        return size.get();
     }
 }

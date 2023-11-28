@@ -3,7 +3,9 @@ package edu.hw7.task3;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PersonDatabaseTest {
@@ -46,14 +48,11 @@ public class PersonDatabaseTest {
         );
 
         List<Thread> addThreads = new ArrayList<>();
-        List<Thread> deleteThreads = new ArrayList<>();
         people.forEach(person -> {
                 addThreads.add(new Thread(() -> database.add(person)));
-                deleteThreads.add(new Thread(() -> database.delete(person.id())));
             }
         );
         addThreads.forEach(Thread::start);
-        deleteThreads.forEach(Thread::start);
 
         addThreads.forEach(thread -> {
             try {
@@ -62,14 +61,12 @@ public class PersonDatabaseTest {
                 throw new RuntimeException(e);
             }
         });
-        deleteThreads.forEach(thread -> {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        assertTrue(database.size() < 6);
+
+        assertNotNull(database.findByAddress("Address 2"));
+        assertNotNull(database.findByPhone("Phone 5"));
+        assertNotNull(database.findByName("First"));
+        database.delete(1);
+        assertThat(database.findByPhone("Phone 1")).isEmpty();
     }
 
     @Test
@@ -88,14 +85,11 @@ public class PersonDatabaseTest {
         );
 
         List<Thread> addThreads = new ArrayList<>();
-        List<Thread> deleteThreads = new ArrayList<>();
         people.forEach(person -> {
                 addThreads.add(new Thread(() -> database.add(person)));
-                deleteThreads.add(new Thread(() -> database.delete(person.id())));
             }
         );
         addThreads.forEach(Thread::start);
-        deleteThreads.forEach(Thread::start);
 
         addThreads.forEach(thread -> {
             try {
@@ -104,13 +98,10 @@ public class PersonDatabaseTest {
                 throw new RuntimeException(e);
             }
         });
-        deleteThreads.forEach(thread -> {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        assertTrue(database.size() < 6);
+        assertNotNull(database.findByAddress("Address 2"));
+        assertNotNull(database.findByPhone("Phone 5"));
+        assertNotNull(database.findByName("First"));
+        database.delete(1);
+        assertThat(database.findByPhone("Phone 1")).isEmpty();
     }
 }

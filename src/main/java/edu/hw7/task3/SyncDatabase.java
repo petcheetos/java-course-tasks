@@ -11,14 +11,12 @@ public class SyncDatabase implements PersonDatabase {
     private final Map<String, List<Person>> nameMap;
     private final Map<String, List<Person>> addressMap;
     private final Map<String, List<Person>> phoneNumberMap;
-    private final AtomicInteger size;
 
     public SyncDatabase() {
         idMap = new HashMap<>();
         nameMap = new HashMap<>();
         addressMap = new HashMap<>();
         phoneNumberMap = new HashMap<>();
-        size = new AtomicInteger(0);
     }
 
     @Override
@@ -33,8 +31,6 @@ public class SyncDatabase implements PersonDatabase {
 
         phoneNumberMap.putIfAbsent(person.phoneNumber(), new ArrayList<>());
         phoneNumberMap.get(person.phoneNumber()).add(person);
-
-        size.getAndIncrement();
     }
 
     @Override
@@ -45,7 +41,6 @@ public class SyncDatabase implements PersonDatabase {
             addressMap.get(person.address()).remove(person);
             phoneNumberMap.get(person.phoneNumber()).remove(person);
             idMap.remove(id);
-            size.getAndDecrement();
         }
     }
 
@@ -62,10 +57,5 @@ public class SyncDatabase implements PersonDatabase {
     @Override
     public synchronized List<Person> findByPhone(String phone) {
         return phoneNumberMap.get(phone);
-    }
-
-    @Override
-    public synchronized int size() {
-        return size.get();
     }
 }
