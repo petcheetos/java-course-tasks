@@ -1,6 +1,5 @@
 package edu.project3.log;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;

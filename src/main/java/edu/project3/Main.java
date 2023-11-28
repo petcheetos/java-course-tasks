@@ -10,6 +10,8 @@ public class Main {
     public static void main(String[] args) {
         ConsoleHandler handler = new ConsoleHandler(args);
         ConsoleHandler.ConsoleCommand command = handler.getCommand();
-        LogAnalysisExecutor.run(command);
+        if (command != null) {
+            LogAnalysisExecutor.run(command);
+        }
     }
 }

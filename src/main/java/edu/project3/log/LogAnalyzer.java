@@ -26,17 +26,18 @@ public class LogAnalyzer {
         String readLogs = logsReader.read(command.uri());
         LogParser parser = new LogParser();
         logsList = parser.getLogsList(readLogs);
-        checkParameters();
+        logsList = checkParameters(logsList);
     }
 
-    private void checkParameters() {
+    private List<Log> checkParameters(List<Log> logs) {
         if (command.timeFrom() == null && command.timeTo() != null) {
-            logsList = LogFilter.filterLogsBeforeDate(command.timeTo(), logsList);
+            return LogFilter.filterLogsBeforeDate(command.timeTo(), logs);
         } else if (command.timeFrom() != null && command.timeTo() == null) {
-            logsList = LogFilter.filterLogsAfterDate(command.timeFrom(), logsList);
+            return LogFilter.filterLogsAfterDate(command.timeFrom(), logs);
         } else if (command.timeFrom() != null) {
-            logsList = LogFilter.filterLogsByDateRange(command.timeFrom(), command.timeTo(), logsList);
+            return LogFilter.filterLogsByDateRange(command.timeFrom(), command.timeTo(), logs);
         }
+        return null;
     }
 
     public long countTotalRequests() {

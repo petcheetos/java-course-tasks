@@ -1,5 +1,6 @@
 package edu.project3;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
@@ -9,8 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ConsoleHandler {
-    public static final Logger LOGGER = LogManager.getLogger();
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final Logger LOGGER = LogManager.getLogger();
     private static final String ERROR = "Incorrect arguments";
     private final String[] arguments;
 
@@ -33,10 +34,16 @@ public class ConsoleHandler {
                     try {
                         pathUri = new URI(arguments[++argIndex]);
                     } catch (URISyntaxException exception) {
-                        LOGGER.error(ERROR);
-                        return null;
+                        try {
+                            pathUri = new File(arguments[argIndex]).toURI();
+                            if (!(new File(pathUri).exists())) {
+                                throw new NullPointerException();
+                            }
+                        } catch (NullPointerException e) {
+                            LOGGER.error(ERROR);
+                            return null;
+                        }
                     }
-                   //pathUri = new File(arguments[++argIndex]).toURI();
                     break;
                 case "--from":
                     from = arguments[++argIndex];
