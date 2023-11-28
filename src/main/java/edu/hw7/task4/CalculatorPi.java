@@ -1,14 +1,17 @@
 package edu.hw7.task4;
 
-import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.DoubleAdder;
-import java.util.stream.Stream;
+import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 
 public class CalculatorPi {
-    public static final double COEFFICIENT = 4D;
-    public static final double RADIUS = 1D;
+    private static final double COEFFICIENT = 4D;
+    private static final double RADIUS = 0.5D;
+    private static final double CENTRE = 0.5D;
 
     private CalculatorPi() {
     }
@@ -20,7 +23,7 @@ public class CalculatorPi {
         for (int i = 0; i < iterations; i++) {
             double randomWidth = random.nextDouble();
             double randomHeight = random.nextDouble();
-            if (randomWidth * randomWidth + randomHeight * randomHeight <= RADIUS * RADIUS) {
+            if (pow(abs(randomWidth - CENTRE), 2) + pow(abs(randomHeight - CENTRE), 2) <= pow(RADIUS, 2)) {
                 circleCount++;
             }
             totalCount++;
@@ -31,32 +34,24 @@ public class CalculatorPi {
     public static double doMultipleThreadsAlgorithm(int iterations, int threads) {
         DoubleAdder totalCount = new DoubleAdder();
         DoubleAdder circleCount = new DoubleAdder();
-
-        List<Thread> threadList = Stream.generate(
-            () -> new Thread(() -> {
+        try (ExecutorService service = Executors.newFixedThreadPool(threads)) {
+            service.execute(() -> {
                 Random random = ThreadLocalRandom.current();
                 double totalCountCurr = 0D;
                 double circleCountCurr = 0D;
                 for (int i = 0; i < iterations / threads; i++) {
                     double randomWidth = random.nextDouble();
                     double randomHeight = random.nextDouble();
-                    if (randomWidth * randomWidth + randomHeight * randomHeight <= RADIUS * RADIUS) {
+                    if (pow(abs(randomWidth - CENTRE), 2) + pow(abs(randomHeight - CENTRE), 2) <= pow(RADIUS, 2)) {
                         circleCountCurr++;
                     }
                     totalCountCurr++;
                 }
                 totalCount.add(totalCountCurr);
                 circleCount.add(circleCountCurr);
-            })).limit(threads).toList();
-
-        threadList.forEach(Thread::start);
-        threadList.forEach(thread -> {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+            });
+            service.shutdown();
+        }
         return COEFFICIENT * (circleCount.sum() / totalCount.sum());
     }
 }
