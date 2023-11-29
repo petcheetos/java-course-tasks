@@ -35,7 +35,7 @@ public class CalculatorPiTest {
         long timeElapsedSingleAlg = endTimeSingleAlg - startTimeSingleAlg;
 
         long startTimeMultipleAlg = System.currentTimeMillis();
-        CalculatorPi.doMultipleThreadsAlgorithm(arg, 8);
+        CalculatorPi.doMultipleThreadsAlgorithm(arg, Runtime.getRuntime().availableProcessors());
         long endTimeMultipleAlg = System.currentTimeMillis();
         long timeElapsedMultipleAlg = endTimeMultipleAlg - startTimeMultipleAlg;
 
