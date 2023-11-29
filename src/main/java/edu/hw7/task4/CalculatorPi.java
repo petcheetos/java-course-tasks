@@ -50,7 +50,6 @@ public class CalculatorPi {
                 totalCount.add(totalCountCurr);
                 circleCount.add(circleCountCurr);
             });
-            service.shutdown();
         }
         return COEFFICIENT * (circleCount.sum() / totalCount.sum());
     }
