@@ -37,18 +37,14 @@ public class CalculatorPi {
         try (ExecutorService service = Executors.newFixedThreadPool(threads)) {
             service.execute(() -> {
                 Random random = ThreadLocalRandom.current();
-                double totalCountCurr = 0D;
-                double circleCountCurr = 0D;
-                for (int i = 0; i < iterations / threads; i++) {
+                for (int i = 0; i < iterations / threads + iterations % threads; i++) {
                     double randomWidth = random.nextDouble();
                     double randomHeight = random.nextDouble();
                     if (pow(abs(randomWidth - CENTRE), 2) + pow(abs(randomHeight - CENTRE), 2) <= pow(RADIUS, 2)) {
-                        circleCountCurr++;
+                        circleCount.add(1.0);
                     }
-                    totalCountCurr++;
+                    totalCount.add(1.0);
                 }
-                totalCount.add(totalCountCurr);
-                circleCount.add(circleCountCurr);
             });
         }
         return COEFFICIENT * (circleCount.sum() / totalCount.sum());
