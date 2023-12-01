@@ -8,6 +8,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        if (args == null) {
+            throw new NullPointerException();
+        }
         ConsoleHandler handler = new ConsoleHandler(args);
         ConsoleHandler.ConsoleCommand command = handler.getCommand();
         if (command != null) {
