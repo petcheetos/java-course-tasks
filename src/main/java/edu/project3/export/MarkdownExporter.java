@@ -3,6 +3,7 @@ package edu.project3.export;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 
 public class MarkdownExporter implements Exporter {
@@ -13,8 +14,8 @@ public class MarkdownExporter implements Exporter {
     }
 
     @Override
-    public void writeToFile(String content, String outputPath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+    public void writeToFile(String content, Path outputPath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath.toString()))) {
             writer.write(content);
         } catch (IOException e) {
             throw new RuntimeException();
@@ -31,7 +32,6 @@ public class MarkdownExporter implements Exporter {
         return result.toString();
     }
 
-
     @Override
     public String convertResourcesRequested(Map<String, String> generalMetrics) {
         StringBuilder result = new StringBuilder();
@@ -41,7 +41,6 @@ public class MarkdownExporter implements Exporter {
         generalMetrics.forEach((key, value) -> result.append(String.format(format, key, value)));
         return result.toString();
     }
-
 
     @Override
     public String convertResponseCodeMetrics(Map<String, String> generalMetrics) {

@@ -3,6 +3,7 @@ package edu.project3.export;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 
 public class AsciiDocExporter implements Exporter {
@@ -15,8 +16,8 @@ public class AsciiDocExporter implements Exporter {
     }
 
     @Override
-    public void writeToFile(String content, String outputPath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+    public void writeToFile(String content, Path outputPath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath.toString()))) {
             writer.write(content);
         } catch (IOException e) {
             throw new RuntimeException();

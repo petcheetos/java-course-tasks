@@ -4,15 +4,23 @@ import edu.project3.readers.FileLogsReader;
 import edu.project3.readers.HTTPLogsReader;
 import java.io.File;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class LogReadersTest {
 
     @Test
-    void testFileLogsReader() {
+    void testFileLogsReader() throws URISyntaxException {
+        String fileName = "fileLogs.txt";
+        URL resource = getClass().getClassLoader().getResource(fileName);
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        }
+
         FileLogsReader fileLogsReader = new FileLogsReader();
-        assertFalse(fileLogsReader.read(new File("src/main/java/edu/project3/resources/fileLogs.txt").toURI())
+        assertFalse(fileLogsReader.read(new File(resource.toURI()).toURI())
             .isEmpty());
     }
 

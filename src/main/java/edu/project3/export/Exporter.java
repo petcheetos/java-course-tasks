@@ -1,10 +1,11 @@
 package edu.project3.export;
 
+import java.nio.file.Path;
 import java.util.Map;
 
 public interface Exporter {
 
-    void writeToFile(String content, String outputPath);
+    void writeToFile(String content, Path outputPath);
 
     String convertGeneralInfo(Map<String, String> generalMetrics);
 

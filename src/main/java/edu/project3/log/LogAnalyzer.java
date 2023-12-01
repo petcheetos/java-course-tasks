@@ -37,7 +37,7 @@ public class LogAnalyzer {
         } else if (command.timeFrom() != null) {
             return LogFilter.filterLogsByDateRange(command.timeFrom(), command.timeTo(), logs);
         }
-        return null;
+        return logs;
     }
 
     public long countTotalRequests() {

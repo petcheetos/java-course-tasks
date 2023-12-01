@@ -1,28 +1,33 @@
 package edu.project3;
 
+import edu.project3.log.LogAnalysisExecutor;
 import edu.project3.log.LogAnalyzer;
 import edu.project3.log.LogStatistics;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.Map;
 import java.util.TreeMap;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LogAnalyzerTest {
 
     @Test
-    void testGetGeneralMetrics() throws IOException {
-        File file = new File("src/main/java/edu/project3/resources/fileLogs.txt");
+    void testGetGeneralMetrics() throws URISyntaxException {
+        String fileName = "fileLogs.txt";
+        URL resource = getClass().getClassLoader().getResource(fileName);
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        }
         LogAnalyzer logAnalyzer = new LogAnalyzer(new ConsoleHandler.ConsoleCommand(
-            file.toURI(),
+            resource.toURI(),
             null, null, null
         ));
 
@@ -39,9 +44,14 @@ public class LogAnalyzerTest {
     }
 
     @Test
-    void testGetResourcesRequested() {
+    void testGetResourcesRequested() throws URISyntaxException {
+        String fileName = "fileLogs.txt";
+        URL resource = getClass().getClassLoader().getResource(fileName);
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        }
         LogAnalyzer logAnalyzer = new LogAnalyzer(new ConsoleHandler.ConsoleCommand(
-            new File("src/main/java/edu/project3/resources/fileLogs.txt").toURI(),
+            resource.toURI(),
             null, null, null
         ));
 
@@ -52,9 +62,14 @@ public class LogAnalyzerTest {
     }
 
     @Test
-    void testGetResponseCodeMetrics() {
+    void testGetResponseCodeMetrics() throws URISyntaxException {
+        String fileName = "fileLogs.txt";
+        URL resource = getClass().getClassLoader().getResource(fileName);
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        }
         LogAnalyzer logAnalyzer = new LogAnalyzer(new ConsoleHandler.ConsoleCommand(
-            new File("src/main/java/edu/project3/resources/fileLogs.txt").toURI(),
+            resource.toURI(),
             null, null, null
         ));
 
@@ -66,47 +81,39 @@ public class LogAnalyzerTest {
     }
 
     @Test
-    void testAnalyzerExecutorMDFile() throws IOException {
+    void testAnalyzerExecutorMDFile(@TempDir Path tempDir) {
 
-        String fileName = "src/main/java/edu/project3/resources/file.md";
+        Path path = tempDir.resolve("file.md");
 
-        try (BufferedWriter bf = Files.newBufferedWriter(
-            Path.of(fileName),
-            StandardOpenOption.TRUNCATE_EXISTING
-        )) {
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ConsoleHandler.ConsoleCommand command = new ConsoleHandler.ConsoleCommand(
+            URI.create(
+                "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"),
+            null, null, ConsoleHandler.ConsoleCommand.ResultFileFormat.Markdown
+        );
 
-        Main.main(new String[] {"--path",
-            "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"});
-
-        File file = new File(fileName);
-
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        assertNotNull(br.readLine());
+        LogAnalysisExecutor.run(command, path);
+        assertTrue(Files.exists(path));
+        assertAll(
+            () -> assertTrue(Files.exists(path)),
+            () -> assertNotNull(Files.readAllLines(path))
+        );
     }
 
     @Test
-    void testAnalyzerExecutorADocFile() throws IOException {
+    void testAnalyzerExecutorADocFile(@TempDir Path tempDir) {
+        Path path = tempDir.resolve("file.adoc");
 
-        String fileName = "src/main/java/edu/project3/resources/file.adoc";
+        ConsoleHandler.ConsoleCommand command = new ConsoleHandler.ConsoleCommand(
+            URI.create(
+                "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"),
+            null, null, ConsoleHandler.ConsoleCommand.ResultFileFormat.ADoc
+        );
 
-        try (BufferedWriter bf = Files.newBufferedWriter(
-            Path.of(fileName),
-            StandardOpenOption.TRUNCATE_EXISTING
-        )) {
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Main.main(new String[] {"--path",
-            "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs",
-            "--format", "adoc"});
-
-        File file = new File(fileName);
-
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        assertNotNull(br.readLine());
+        LogAnalysisExecutor.run(command, path);
+        assertTrue(Files.exists(path));
+        assertAll(
+            () -> assertTrue(Files.exists(path)),
+            () -> assertNotNull(Files.readAllLines(path))
+        );
     }
 }
