@@ -10,13 +10,16 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 public class KeywordQuoteServer {
     private final ExecutorService executor;
     private final Semaphore semaphore;
     private final InetSocketAddress address;
+    private final int maxConnections = 3;
+    private ServerSocketChannel serverSocketChannel = null;
 
-    public KeywordQuoteServer(String host, int port, int numberOfThreads, int maxConnections) {
+    public KeywordQuoteServer(String host, int port, int numberOfThreads) {
         executor = Executors.newFixedThreadPool(numberOfThreads);
         semaphore = new Semaphore(maxConnections, true);
         address = new InetSocketAddress(host, port);
@@ -24,7 +27,7 @@ public class KeywordQuoteServer {
 
     public void start() {
         try (Selector selector = Selector.open()) {
-            ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+            serverSocketChannel = ServerSocketChannel.open();
             serverSocketChannel.socket().bind(address);
             serverSocketChannel.configureBlocking(false);
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
@@ -48,5 +51,16 @@ public class KeywordQuoteServer {
 
     private void startExecution(SocketChannel client) {
         executor.execute(new KeywordQuoteWorker(client, semaphore));
+    }
+
+    public void stop() {
+        executor.shutdownNow();
+        semaphore.release(maxConnections);
+        try {
+            executor.awaitTermination(5, TimeUnit.SECONDS); // Ждем завершения всех задач
+            serverSocketChannel.close();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
