@@ -2,6 +2,8 @@ package edu.hw8.task2;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FixedThreadPool implements ThreadPool {
@@ -28,9 +30,11 @@ public class FixedThreadPool implements ThreadPool {
     public void execute(Runnable runnable) {
         if (isWorking.get()) {
             try {
-                blockingQueue.put(runnable);
+                if (!blockingQueue.offer(runnable, 1, TimeUnit.SECONDS)) {
+                    throw new RejectedExecutionException("Task cannot be added to the queue");
+                }
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
             }
         }
     }
