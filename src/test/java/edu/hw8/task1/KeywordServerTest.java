@@ -18,7 +18,7 @@ public class KeywordServerTest {
         serverThread.start();
         Thread.sleep(100);
         client.sendMessage("интеллект");
-        assertThat(outputStream.toString().replace("\u0000", "").trim()).isEqualTo("Client: интеллект\r\n"
+        assertThat(outputStream.toString().replace("\u0000", "").trim()).isEqualTo("Client: интеллект\n"
             + "Server: Чем ниже интеллект, тем громче оскорбления");
     }
 }
