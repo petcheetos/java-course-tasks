@@ -69,5 +69,3 @@ public class FixedThreadPool implements ThreadPool {
         }
     }
 }
-
-

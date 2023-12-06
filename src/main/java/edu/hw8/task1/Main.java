@@ -30,7 +30,6 @@ public class Main {
                             client = new KeywordQuoteClient(LOCAL_HOST, PORT);
                             KeywordQuoteServer finalServer = server;
                             serverThread = new Thread(finalServer::start);
-
                             serverThread.start();
                             serverIsWorking = true;
                         }
