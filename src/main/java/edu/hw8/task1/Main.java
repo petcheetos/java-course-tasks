@@ -2,12 +2,9 @@ package edu.hw8.task1;
 
 import java.io.IOException;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("RegexpSinglelineJava")
 public class Main {
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final int NUMBER_OF_THREADS = 3;
     private static final String LOCAL_HOST = "localhost";
     private static final int PORT = 8080;
@@ -45,7 +42,7 @@ public class Main {
                             try {
                                 client.sendMessage(msg);
                             } catch (IOException e) {
-                                LOGGER.error("Failed to send message", e);
+                                System.err.println("Failed to send message");
                             }
                         }
                         break;
