@@ -1,6 +1,7 @@
 package edu.hw8.task2;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -38,6 +39,9 @@ public class FixedThreadPool implements ThreadPool {
     @Override
     public void close() {
         isWorking.set(false);
+        for (Worker worker : workers) {
+            worker.interrupt();
+        }
     }
 
     public static FixedThreadPool create(int threads) {
