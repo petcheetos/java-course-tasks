@@ -5,9 +5,15 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("RegexpSinglelineJava")
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int NUMBER_OF_THREADS = 3;
+    private static final String LOCAL_HOST = "localhost";
+    private static final int PORT = 8080;
+
+    private Main() {
+    }
 
     public static void main(String[] args) {
         boolean serverIsWorking = false;
@@ -23,8 +29,8 @@ public class Main {
                 switch (command) {
                     case "--start":
                         if (!serverIsWorking) {
-                            server = new KeywordQuoteServer("localhost", 8080, NUMBER_OF_THREADS);
-                            client = new KeywordQuoteClient("localhost", 8080);
+                            server = new KeywordQuoteServer(LOCAL_HOST, PORT, NUMBER_OF_THREADS);
+                            client = new KeywordQuoteClient(LOCAL_HOST, PORT);
                             KeywordQuoteServer finalServer = server;
                             serverThread = new Thread(finalServer::start);
 

@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 
 public class KeywordQuoteServer {
     private final ExecutorService executor;
@@ -57,9 +56,8 @@ public class KeywordQuoteServer {
         executor.shutdownNow();
         semaphore.release(maxConnections);
         try {
-            executor.awaitTermination(5, TimeUnit.SECONDS); // Ждем завершения всех задач
             serverSocketChannel.close();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
