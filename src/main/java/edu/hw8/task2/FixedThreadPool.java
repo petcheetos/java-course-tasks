@@ -1,7 +1,6 @@
 package edu.hw8.task2;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -55,12 +54,13 @@ public class FixedThreadPool implements ThreadPool {
 
         @Override
         public void run() {
-            while (isWorking.get() || !blockingQueue.isEmpty()) {
-                Runnable runnable = blockingQueue.poll();
-                while (runnable != null) {
+            try {
+                while (isWorking.get() || !blockingQueue.isEmpty()) {
+                    Runnable runnable = blockingQueue.take();
                     runnable.run();
-                    runnable = blockingQueue.poll();
                 }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
     }
