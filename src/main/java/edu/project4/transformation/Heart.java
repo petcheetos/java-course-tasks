@@ -12,7 +12,7 @@ public class Heart implements Transformation {
         double fi = Math.atan(y / x);
         return new Point(
             r * Math.sin(r * fi),
-            -r * Math.cos(r * fi));
+            -r * Math.cos(r * fi)
+        );
     }
 }
-
