@@ -4,11 +4,10 @@ import edu.project2.solvers.BFSMazeSolver;
 import edu.project2.solvers.DFSMazeSolver;
 import edu.project2.solvers.ParallelDFSMazeSolver;
 import edu.project2.solvers.Solver;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SolversTest {

@@ -10,7 +10,6 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class StatsCollector {
-
     private final ExecutorService executorService;
     private final BlockingQueue<Metric> metricsToCollect;
     private final Map<String, Statistic> results;
