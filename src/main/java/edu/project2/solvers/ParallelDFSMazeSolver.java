@@ -10,8 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class ParallelDFSMazeSolver implements Solver {
-    private static final int NUM_THREADS = 4;
-    private static final int[][] DIRECTIONS = new int[][] {
+    private static final int[][] DIRECTIONS = new int[][]{
         {-1, 0}, {1, 0}, {0, -1}, {0, 1}
     };
 
@@ -21,31 +20,27 @@ public class ParallelDFSMazeSolver implements Solver {
             || maze.getCellTypeAt(end.row(), end.col()) != Maze.Cell.Type.PASSAGE) {
             throw new IllegalArgumentException(ConsoleOutput.CELL_IS_NOT_PASSAGE);
         }
-        ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
         List<Future<List<Maze.Coordinate>>> futures = new ArrayList<>();
 
-        for (int[] direction : DIRECTIONS) {
-            Future<List<Maze.Coordinate>> future = executor.submit(() -> {
+        for (int[] step : DIRECTIONS) {
+            Future<List<Maze.Coordinate>> future = executorService.submit(() -> {
                 List<Maze.Coordinate> path = new ArrayList<>();
                 boolean[][] visited = new boolean[maze.getHeight()][maze.getWidth()];
-                findPath(maze, new Maze.Coordinate(start.row() + direction[0], start.col() + direction[1]),
-                    end, visited, path
-                );
+                findPath(maze, new Maze.Coordinate(start.row() + step[0], start.col() + step[1]), end, visited, path);
                 return path;
             });
             futures.add(future);
         }
-        executor.shutdown();
-
+        executorService.shutdown();
         for (Future<List<Maze.Coordinate>> future : futures) {
-            List<Maze.Coordinate> path;
             try {
-                path = future.get();
+                List<Maze.Coordinate> path = future.get();
+                if (!path.isEmpty() && path.get(path.size() - 1).equals(end)) {
+                    return path;
+                }
             } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-            if (!path.isEmpty()) {
-                return path;
+                throw new RuntimeException();
             }
         }
         return null;
@@ -66,13 +61,16 @@ public class ParallelDFSMazeSolver implements Solver {
         }
         visited[current.row()][current.col()] = true;
         path.add(current);
-        if (current.equals(end)) {
-            return;
-        }
-        for (int[] step : DIRECTIONS) {
-            int newRow = current.row() + step[0];
-            int newCol = current.col() + step[1];
-            findPath(maze, new Maze.Coordinate(newRow, newCol), end, visited, path);
+        if (!current.equals(end)) {
+            for (int[] step : DIRECTIONS) {
+                int newRow = current.row() + step[0];
+                int newCol = current.col() + step[1];
+
+                findPath(maze, new Maze.Coordinate(newRow, newCol), end, visited, path);
+            }
+            if (!path.isEmpty() && !path.get(path.size() - 1).equals(end)) {
+                path.remove(path.size() - 1);
+            }
         }
     }
 }
