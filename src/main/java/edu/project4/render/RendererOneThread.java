@@ -2,15 +2,11 @@ package edu.project4.render;
 
 import edu.project4.model.Coefficient;
 import edu.project4.model.FractalImage;
-import edu.project4.model.Pixel;
-import edu.project4.model.Point;
 import edu.project4.model.Rect;
 import edu.project4.transformation.Transformation;
-import java.awt.Color;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class RendererOneThread implements Renderer {
+public class RendererOneThread extends AbstractRenderer {
     private final short start = -20;
 
     @Override
@@ -23,42 +19,7 @@ public class RendererOneThread implements Renderer {
             coefficients[i] = Coefficient.init();
         }
         for (int num = 0; num < samples; num++) {
-            Point pw = world.getRandomPoint();
-            for (short step = start; step < iterPerSample; step++) {
-                Coefficient coefficient = coefficients[ThreadLocalRandom.current().nextInt(0, coefficients.length)];
-                pw = pw.affineTransformPoint(coefficient);
-                Transformation transformation =
-                    variations.get(ThreadLocalRandom.current().nextInt(0, variations.size()));
-                pw = transformation.apply(pw);
-                if (step >= 0) {
-                    double theta = 0.0;
-                    for (int s = 0; s < symmetry; theta += Math.PI * 2 / symmetry, s++) {
-                        Point pwr = pw.rotatePoint(theta);
-                        if (world.contains(pwr)) {
-                            Pixel pixel = canvas.getPixel(
-                                (int) ((pwr.x() - world.x()) * canvas.getWidth() / world.width()),
-                                (int) ((pw.y() - world.y()) * canvas.getHeight() / world.height())
-                            );
-                            if (pixel == null) {
-                                continue;
-                            }
-                            Color color = coefficient.color();
-                            if (pixel.getHitCount() == 0) {
-                                pixel.setColor(coefficient.color().getRed(),
-                                    coefficient.color().getGreen(), coefficient.color().getBlue()
-                                );
-                            } else {
-                                int red = (pixel.getColor().getRed() + color.getRed()) / 2;
-                                int green = (pixel.getColor().getGreen() + color.getGreen()) / 2;
-                                int blue = (pixel.getColor().getBlue() + color.getBlue()) / 2;
-                                pixel.setColor(red, green, blue);
-                            }
-                            pixel.addHit();
-                        }
-                    }
-
-                }
-            }
+            executeIteration(canvas, world, variations, start, iterPerSample, symmetry, coefficients);
         }
         return canvas;
     }
