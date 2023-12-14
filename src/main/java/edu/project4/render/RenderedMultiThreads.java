@@ -74,20 +74,7 @@ public class RenderedMultiThreads implements Renderer {
                         if (pixel == null) {
                             continue;
                         }
-                        synchronized (pixel) {
-                            Color color = coefficient.color();
-                            if (pixel.getHitCount() == 0) {
-                                pixel.setColor(coefficient.color().getRed(),
-                                    coefficient.color().getGreen(), coefficient.color().getBlue()
-                                );
-                            } else {
-                                int red = (pixel.getColor().getRed() + color.getRed()) / 2;
-                                int green = (pixel.getColor().getGreen() + color.getGreen()) / 2;
-                                int blue = (pixel.getColor().getBlue() + color.getBlue()) / 2;
-                                pixel.setColor(red, green, blue);
-                            }
-                            pixel.addHit();
-                        }
+                        pixel.changeColor(coefficient.color());
                     }
                 }
             }
