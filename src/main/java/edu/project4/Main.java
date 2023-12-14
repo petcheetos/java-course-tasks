@@ -3,6 +3,7 @@ package edu.project4;
 import edu.project4.model.Rect;
 import edu.project4.process.Corrector;
 import edu.project4.render.RenderedMultiThreads;
+import edu.project4.render.Renderer;
 import edu.project4.render.RendererOneThread;
 import edu.project4.transformation.Transformation;
 import java.nio.file.Path;
@@ -42,18 +43,16 @@ public class Main {
             }
 
             String format = ConsoleManager.inputFormat(scanner);
-            FractalFlame fractalFlame;
+            Renderer renderer;
             if (threads > 1) {
-                fractalFlame =
-                    new FractalFlame(width, height, new RenderedMultiThreads(threads), new Rect(-4, -3, 8, 6),
-                        transformations, new Corrector()
-                    );
+                renderer = new RenderedMultiThreads(threads);
             } else {
-                fractalFlame =
-                    new FractalFlame(width, height, new RendererOneThread(), new Rect(-4, -3, 8, 6),
-                        transformations, new Corrector()
-                    );
+                renderer = new RendererOneThread();
             }
+            FractalFlame fractalFlame =
+                new FractalFlame(width, height, renderer, new Rect(-4, -3, 8, 6),
+                    transformations, new Corrector()
+                );
             Path path = Path.of("src/main/resources/fractal." + format);
             fractalFlame.generate(path, format, samples, iterPerSample, symmetry);
         }
