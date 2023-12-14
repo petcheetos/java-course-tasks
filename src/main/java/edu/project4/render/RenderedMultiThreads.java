@@ -58,14 +58,14 @@ public class RenderedMultiThreads implements Renderer {
         Point pw = world.getRandomPoint();
         for (short step = start; step < iterPerSample; step++) {
             Coefficient coefficient = coefficients[ThreadLocalRandom.current().nextInt(0, coefficients.length)];
-            pw = getPointAffineTransformation(coefficient, pw);
+            pw = pw.affineTransformPoint(coefficient);
             Transformation transformation =
                 variations.get(ThreadLocalRandom.current().nextInt(0, variations.size()));
             pw = transformation.apply(pw);
             if (step >= 0) {
                 double theta = 0.0;
                 for (int s = 0; s < symmetry; theta += Math.PI * 2 / symmetry, s++) {
-                    Point pwr = getRotatedPoint(pw, theta);
+                    Point pwr = pw.rotatePoint(theta);
                     if (world.contains(pwr)) {
                         Pixel pixel = canvas.getPixel(
                             (int) ((pwr.x() - world.x()) * canvas.getWidth() / world.width()),
@@ -92,17 +92,5 @@ public class RenderedMultiThreads implements Renderer {
                 }
             }
         }
-    }
-
-    private Point getPointAffineTransformation(Coefficient coefficient, Point point) {
-        double x = coefficient.a() * point.x() + coefficient.b() * point.y() + coefficient.c();
-        double y = coefficient.d() * point.x() + coefficient.e() * point.y() + coefficient.f();
-        return new Point(x, y);
-    }
-
-    private Point getRotatedPoint(Point point, double theta) {
-        double x = point.x() * Math.cos(theta) - point.y() * Math.sin(theta);
-        double y = point.x() * Math.sin(theta) + point.y() * Math.cos(theta);
-        return new Point(x, y);
     }
 }
