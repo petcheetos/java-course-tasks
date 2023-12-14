@@ -6,18 +6,18 @@ import edu.project4.model.Pixel;
 import edu.project4.model.Point;
 import edu.project4.model.Rect;
 import edu.project4.transformation.Transformation;
-import java.awt.Color;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class RenderedMultiThreads implements Renderer {
     private final short start = -20;
-    private final ExecutorService executorService;
+    private final int threads;
 
     public RenderedMultiThreads(int threads) {
-        executorService = Executors.newFixedThreadPool(threads);
+        this.threads = threads;
     }
 
     @Override
@@ -29,6 +29,7 @@ public class RenderedMultiThreads implements Renderer {
         int iterPerSample,
         int symmetry
     ) {
+        ExecutorService executorService = Executors.newFixedThreadPool(threads);
         Coefficient[] coefficients = new Coefficient[samples];
         for (int i = 0; i < samples; i++) {
             coefficients[i] = Coefficient.init();
@@ -45,6 +46,11 @@ public class RenderedMultiThreads implements Renderer {
             ));
         }
         executorService.shutdown();
+        try {
+            executorService.awaitTermination(100, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return canvas;
     }
 

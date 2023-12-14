@@ -39,8 +39,7 @@ public class Pixel {
     public synchronized void changeColor(Color coefficientColor) {
         if (hitCount == 0) {
             setColor(coefficientColor.getRed(), coefficientColor.getGreen(), coefficientColor.getBlue());
-        }
-        else {
+        } else {
             int red = (color.getRed() + coefficientColor.getRed()) / 2;
             int green = (color.getGreen() + coefficientColor.getGreen()) / 2;
             int blue = (color.getBlue() + coefficientColor.getBlue()) / 2;
