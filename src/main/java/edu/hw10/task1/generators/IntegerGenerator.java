@@ -17,7 +17,6 @@ public class IntegerGenerator implements Generator<Integer> {
     @Override
     public Integer generate(Parameter parameter) {
         int generatedValue = random.nextInt();
-
         for (Annotation annotation : parameter.getAnnotations()) {
             if (annotation instanceof NotNull) {
                 generatedValue = generateNotNullValue();

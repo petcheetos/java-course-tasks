@@ -19,7 +19,6 @@ public class StringGenerator implements Generator<String> {
     @Override
     public String generate(Parameter parameter) {
         String generatedValue = generateRandomString();
-
         for (Annotation annotation : parameter.getAnnotations()) { //аннотации не берет
             if (annotation instanceof NotNull) {
                 generatedValue = generateNotNullValue();
@@ -27,7 +26,6 @@ public class StringGenerator implements Generator<String> {
                 generatedValue = generateLengthBoundedValue(parameter);
             }
         }
-
         return generatedValue;
     }
 
@@ -39,7 +37,6 @@ public class StringGenerator implements Generator<String> {
         int minLength = parameter.isAnnotationPresent(Min.class) ? parameter.getAnnotation(Min.class).value() : 0;
         int maxLength =
             parameter.isAnnotationPresent(Max.class) ? parameter.getAnnotation(Max.class).value() : Integer.MAX_VALUE;
-
         if (minLength > maxLength) {
             throw new IllegalArgumentException("Min length cannot be greater than Max length");
         }

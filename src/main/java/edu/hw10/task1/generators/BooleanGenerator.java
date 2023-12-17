@@ -15,7 +15,6 @@ public class BooleanGenerator implements Generator<Boolean> {
     @Override
     public Boolean generate(Parameter parameter) {
         Boolean generatedValue = random.nextBoolean();
-
         for (Annotation annotation : parameter.getAnnotations()) {
             if (annotation instanceof NotNull) {
                 generatedValue = true;
