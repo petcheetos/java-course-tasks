@@ -14,6 +14,8 @@ public class ArithmeticUtilsTest {
     @Test
     void testChangedMethod() throws NoSuchMethodException {
         ArithmeticUtils arithmeticUtils = new ArithmeticUtils();
+        assertEquals(arithmeticUtils.sum(2, 5), 7);
+
         ByteBuddyAgent.install();
         DynamicType.Loaded<ArithmeticUtils> dynamicType = new ByteBuddy()
             .redefine(ArithmeticUtils.class)
