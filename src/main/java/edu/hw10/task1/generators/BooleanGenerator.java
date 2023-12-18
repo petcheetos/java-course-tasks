@@ -14,11 +14,16 @@ public class BooleanGenerator implements Generator<Boolean> {
 
     @Override
     public Boolean generate(Parameter parameter) {
-        boolean generatedValue = random.nextBoolean();
         Annotation annotation = parameter.getAnnotation(NotNull.class);
         if (annotation != null) {
-            generatedValue = true;
+            return random.nextBoolean();
+        } else {
+            return switch (random.nextInt(3)) {
+                case 0 -> false;
+                case 1 -> true;
+                default -> null;
+            };
+
         }
-        return generatedValue;
     }
 }
