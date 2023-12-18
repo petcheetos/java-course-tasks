@@ -2,6 +2,7 @@ package edu.hw10.task2;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -20,6 +21,11 @@ class CacheProxy implements InvocationHandler {
         this.target = target;
         this.cache = new HashMap<>();
         this.cacheFilePath = path;
+        try {
+            loadCacheFromFile();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -47,6 +53,15 @@ class CacheProxy implements InvocationHandler {
             }
         }
         return method.invoke(target, args);
+    }
+
+    private void loadCacheFromFile() throws IOException, ClassNotFoundException {
+        if (Files.exists(cacheFilePath)) {
+            try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(cacheFilePath))) {
+                Map<String, Object> loadedCache = (Map<String, Object>) ois.readObject();
+                cache.putAll(loadedCache);
+            }
+        }
     }
 
     private void writeCacheToFile() {
