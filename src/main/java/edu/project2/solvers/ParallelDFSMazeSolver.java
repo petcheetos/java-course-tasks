@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
+import java.util.concurrent.RecursiveTask;
 
 public class ParallelDFSMazeSolver implements Solver {
     private static final int[][] DIRECTIONS = new int[][]{
@@ -20,19 +22,18 @@ public class ParallelDFSMazeSolver implements Solver {
             || maze.getCellTypeAt(end.row(), end.col()) != Maze.Cell.Type.PASSAGE) {
             throw new IllegalArgumentException(ConsoleOutput.CELL_IS_NOT_PASSAGE);
         }
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
         List<Future<List<Maze.Coordinate>>> futures = new ArrayList<>();
-
-        for (int[] step : DIRECTIONS) {
-            Future<List<Maze.Coordinate>> future = executorService.submit(() -> {
-                List<Maze.Coordinate> path = new ArrayList<>();
-                boolean[][] visited = new boolean[maze.getHeight()][maze.getWidth()];
-                findPath(maze, new Maze.Coordinate(start.row() + step[0], start.col() + step[1]), end, visited, path);
-                return path;
-            });
-            futures.add(future);
+        try (ExecutorService executorService = Executors.newFixedThreadPool(2);) {
+            for (int[] step : DIRECTIONS) {
+                Future<List<Maze.Coordinate>> future = executorService.submit(() -> {
+                    List<Maze.Coordinate> path = new ArrayList<>();
+                    boolean[][] visited = new boolean[maze.getHeight()][maze.getWidth()];
+                    findPath(maze, new Maze.Coordinate(start.row() + step[0], start.col() + step[1]), end, visited, path);
+                    return path;
+                });
+                futures.add(future);
+            }
         }
-        executorService.shutdown();
         for (Future<List<Maze.Coordinate>> future : futures) {
             try {
                 List<Maze.Coordinate> path = future.get();
