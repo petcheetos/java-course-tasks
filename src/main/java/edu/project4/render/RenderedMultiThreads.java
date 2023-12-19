@@ -27,25 +27,22 @@ public class RenderedMultiThreads extends AbstractRenderer {
         int iterPerSample,
         int symmetry
     ) {
-        ExecutorService executorService = Executors.newFixedThreadPool(threads);
-        Coefficient[] coefficients = new Coefficient[samples];
-        for (int i = 0; i < samples; i++) {
-            coefficients[i] = Coefficient.init();
-        }
-
-        for (int num = 0; num < samples; num++) {
-            executorService.execute(() -> executeIteration(
-                canvas,
-                world,
-                variations,
-                start,
-                iterPerSample,
-                symmetry,
-                coefficients
-            ));
-        }
-        executorService.shutdown();
-        try {
+        try (ExecutorService executorService = Executors.newFixedThreadPool(threads)) {
+            Coefficient[] coefficients = new Coefficient[samples];
+            for (int i = 0; i < samples; i++) {
+                coefficients[i] = Coefficient.init();
+            }
+            for (int num = 0; num < samples; num++) {
+                executorService.execute(() -> executeIteration(
+                    canvas,
+                    world,
+                    variations,
+                    start,
+                    iterPerSample,
+                    symmetry,
+                    coefficients
+                ));
+            }
             executorService.awaitTermination(millisecondsToAwait, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
