@@ -9,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class StatsCollector {
+public class StatsCollector implements AutoCloseable {
     private final ExecutorService executorService;
     private final BlockingQueue<Metric> metricsToCollect;
     private final Map<String, Statistic> results;
@@ -58,12 +58,13 @@ public class StatsCollector {
         return new Statistic(sum, sum / array.length, max, min);
     }
 
-    public void stop() {
-        executorService.shutdown();
-    }
-
     public Map<String, Statistic> getResults() {
         return results;
+    }
+
+    @Override
+    public void close() {
+        executorService.shutdown();
     }
 
     public record Statistic(double sum, double average, double max, double min) {

@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
-import java.util.concurrent.RecursiveTask;
 
 public class ParallelDFSMazeSolver implements Solver {
     private static final int[][] DIRECTIONS = new int[][]{
@@ -28,7 +26,8 @@ public class ParallelDFSMazeSolver implements Solver {
                 Future<List<Maze.Coordinate>> future = executorService.submit(() -> {
                     List<Maze.Coordinate> path = new ArrayList<>();
                     boolean[][] visited = new boolean[maze.getHeight()][maze.getWidth()];
-                    findPath(maze, new Maze.Coordinate(start.row() + step[0], start.col() + step[1]), end, visited, path);
+                    findPath(maze, new Maze.Coordinate(start.row() + step[0],
+                        start.col() + step[1]), end, visited, path);
                     return path;
                 });
                 futures.add(future);
