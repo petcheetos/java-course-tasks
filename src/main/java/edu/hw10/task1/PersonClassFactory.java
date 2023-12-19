@@ -15,7 +15,7 @@ public class PersonClassFactory {
         this.hasJob = hasJob;
     }
 
-    public static PersonClassFactory create(@NotNull String name, @Min(1) @Max(100) int age, boolean hasJob) {
+    public static PersonClassFactory create(@NotNull String name, @Min(1) @Max(100) int age, @NotNull boolean hasJob) {
         return new PersonClassFactory(name, age, hasJob);
     }
 
