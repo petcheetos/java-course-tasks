@@ -24,12 +24,12 @@ public class RendererTest {
         );
 
         long startTime1 = System.currentTimeMillis();
-        flame1.generate(path, "png", 100000, 1000, 1);
+        flame1.generate(path, "png", 200000, 500, 1);
         long endTime1 = System.currentTimeMillis();
         long timeElapsed1 = endTime1 - startTime1;
 
         long startTime2 = System.currentTimeMillis();
-        flame2.generate(path, "png", 100000, 1000, 1);
+        flame2.generate(path, "png", 200000, 500, 1);
         long endTime2 = System.currentTimeMillis();
         long timeElapsed2 = endTime2 - startTime2;
 
