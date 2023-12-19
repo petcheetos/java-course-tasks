@@ -28,11 +28,7 @@ public class StatsCollectorTest {
         ExecutorService executorService = Executors.newFixedThreadPool(3);
         try (StatsCollector collector = new StatsCollector(3)) {
             metrics.forEach(metric -> {
-                try {
-                    collector.push(metric.name(), metric.array());
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                collector.push(metric.name(), metric.array());
             });
             Thread.sleep(1);
             executorService.shutdown();
